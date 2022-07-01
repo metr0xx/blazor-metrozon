@@ -1,0 +1,83 @@
+.page {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar {
+    background-image: linear-gradient(180deg, #16a3f0, #1cd1d4 50%);
+}
+
+.grad {
+    background-image: linear-gradient(45deg, #f5b690 0.1%, #ffe0cf, #ede1da);
+    height: 40vh;
+    display: flex;
+}
+
+.topbar {
+ 
+    flex-direction: row;
+    margin: auto;
+  
+}
+
+.Metrozon {
+    position: relative;
+    margin-right: 8vh;
+    width: 12vh;
+    height: 6vh;
+    background-color: transparent;
+    color: #f57818;
+    border: none;
+    font-size: 30pt
+}
+
+.catalog {
+    position: relative;
+    margin-right: 2vh;
+    width: 14vh;
+    height: 5vh;
+    background-color: white;
+    color: #f57818;
+    border: 2px solid #e0d5ce;
+    text-align: center
+}
+
+.input {
+    width: 60vh;
+    height: 5vh;
+    background-color: white;
+    color: black;
+    border: none;
+    margin-right: 0;
+    border: 2px solid #e0d5ce
+}
+
+.search {
+    width: 12vh;
+    height: 5vh;
+    background-color: #e0d5ce;
+    color: #f57818;
+    border: none;
+    margin-left: -.36em;
+    border: 2px solid #e0d5ce
+}
+
+.bag {
+    width: 8vh;
+    height: 5vh;
+    background-color: white;
+    color: #f57818;
+    margin-left: 2vh;
+    border: 2px solid #e0d5ce
+}
+
+.liked {
+    margin-left: 1vh;
+    width: 10vh;
+    height: 5vh;
+    background-color: white;
+    color: black;
+    border: 2px solid #e0d5ce
+}
+

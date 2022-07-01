@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31624.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "blazor-metrozon", "blazor-metrozon\blazor-metrozon.csproj", "{D5CEDC3E-75AE-4C1C-85CB-5194AD830286}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D5CEDC3E-75AE-4C1C-85CB-5194AD830286}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5CEDC3E-75AE-4C1C-85CB-5194AD830286}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5CEDC3E-75AE-4C1C-85CB-5194AD830286}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5CEDC3E-75AE-4C1C-85CB-5194AD830286}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0C330F90-53D7-4967-B877-54E5261C365A}
+	EndGlobalSection
+EndGlobal
