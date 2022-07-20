@@ -6,14 +6,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using blazor_metrozon.Models;
 namespace blazor_metrozon
 {
     public class Program
     {
         public static void Main(string[] args)
         {
+            Console.WriteLine("1315111168");
             CreateHostBuilder(args).Build().Run();
+            PostgresConnection.Connection();         
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -24,3 +26,4 @@ namespace blazor_metrozon
                 });
     }
 }
+ 

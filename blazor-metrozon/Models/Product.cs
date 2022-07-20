@@ -2,12 +2,12 @@
 {
     public class Product
     {
-        public int product_id { get; set; }
-        public int seller_id { get; set; }
-        public int count { get; set; }
-        public int price { get; set; }
-        public double rating { get; set; }
-        public string name { get; set; }
-        public string category_id { get; set; }
+        public int Product_id { get; set; }
+        public int Seller_id { get; set; }
+        public int Category_id { get; set; }
+        public int Count { get; set; }
+        public int Price { get; set; }
+        public double Rating { get; set; }
+        public string Title { get; set; }
     }
 }

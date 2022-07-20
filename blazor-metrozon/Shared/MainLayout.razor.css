@@ -15,10 +15,8 @@
 }
 
 .topbar {
- 
     flex-direction: row;
     margin: auto;
-  
 }
 
 .Metrozon {
@@ -40,7 +38,7 @@
     background-color: white;
     color: #f57818;
     border: 2px solid #e0d5ce;
-    text-align: center
+    font-size: 16pt;
 }
 
 .input {
@@ -64,20 +62,22 @@
 }
 
 .bag {
-    width: 8vh;
+    width: 15vh;
     height: 5vh;
     background-color: white;
     color: #f57818;
     margin-left: 2vh;
-    border: 2px solid #e0d5ce
+    border: 2px solid #e0d5ce;
+    font-size: 16pt;
 }
 
 .liked {
     margin-left: 1vh;
-    width: 10vh;
+    width: 17vh;
     height: 5vh;
     background-color: white;
-    color: black;
-    border: 2px solid #e0d5ce
+    color: #f57818;
+    border: 2px solid #e0d5ce;
+    font-size: 16pt;
 }
 
