@@ -21,7 +21,7 @@
 
 .Metrozon {
     position: relative;
-    margin-right: 8vh;
+    margin-right: 12vh;
     width: 12vh;
     height: 6vh;
     background-color: transparent;
@@ -33,7 +33,7 @@
 .catalog {
     position: relative;
     margin-right: 2vh;
-    width: 14vh;
+    width: 16vh;
     height: 5vh;
     background-color: white;
     color: #f57818;
@@ -62,7 +62,7 @@
 }
 
 .bag {
-    width: 15vh;
+    width: 17vh;
     height: 5vh;
     background-color: white;
     color: #f57818;
@@ -73,7 +73,7 @@
 
 .liked {
     margin-left: 1vh;
-    width: 17vh;
+    width: 19vh;
     height: 5vh;
     background-color: white;
     color: #f57818;
