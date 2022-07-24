@@ -17,7 +17,7 @@ namespace blazor_metrozon.Data.Repository
             {
                 Seller_id = Selesman_id,
                 Category_id = group_id,
-                Count = remains,
+                Amount = remains,
                 Price = value,
                 Title = Name,
             };

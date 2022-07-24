@@ -1,4 +1,9 @@
 ﻿@inherits LayoutComponentBase
+@using Npgsql;
+@using System;
+@using System.Collections.Generic;
+@using System.IO;
+@using Data;
 
 <link href='https://css.gg/search.css' rel='stylesheet'>
 <link href='https://css.gg/menu.css' rel='stylesheet'>
@@ -14,6 +19,39 @@
             <button class="search"><span class="d-inline-block"><i class="gg-search" style="width: 17px; height: 17px;"></i></span></button>
             <button class="bag"><span class=d-inline-block style="height: 17px; width: 28px"><i class="gg-shopping-cart"></i></span>Корзина</button>
             <button class="liked"><span class=d-inline-block style="height: 11px; width: 22px"><i class="gg-heart"></i></span>Избранное</button>
+            <button @onclick="Connection">TEST</button>
         </div>
     </div>
+    @for(int i = 0; i < items.Count; i++)
+    {
+        <p>
+            @items[i]
+        </p>
+    }
 </div>
+
+@code {
+    List<string> items = new List<string>();
+    public void Connection()
+    {
+        StreamReader rd = new StreamReader("./Data/data.txt");
+        string con_str = rd.ReadLine();
+        NpgsqlConnection con = new NpgsqlConnection(con_str);
+        con.Open();
+        NpgsqlCommand com = new NpgsqlCommand("SELECT * FROM users", con);
+        NpgsqlDataReader reader = com.ExecuteReader();
+        while (reader.Read()) {     
+            try {        
+                string result = reader.GetString(2);
+                items.Add(result);
+            }
+            catch {}          
+        }
+        con.Close();
+
+    }
+    
+}
+
+
+ 

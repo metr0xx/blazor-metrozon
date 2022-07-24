@@ -13,9 +13,8 @@ namespace blazor_metrozon
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("1315111168");
             CreateHostBuilder(args).Build().Run();
-            PostgresConnection.Connection();         
+                     
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
