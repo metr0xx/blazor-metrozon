@@ -21,8 +21,8 @@
 
 .Metrozon {
     position: relative;
-    margin-right: 12vh;
-    width: 12vh;
+    margin-right: 5vw;
+    width: 6vw;
     height: 6vh;
     background-color: transparent;
     color: #f57818;
@@ -32,8 +32,8 @@
 
 .catalog {
     position: relative;
-    margin-right: 2vh;
-    width: 16vh;
+    margin-right: 1vw;
+    width: 8vw;
     height: 5vh;
     background-color: white;
     color: #f57818;
@@ -42,7 +42,7 @@
 }
 
 .input {
-    width: 60vh;
+    width: 30vw;
     height: 5vh;
     background-color: white;
     color: black;
@@ -52,7 +52,7 @@
 }
 
 .search {
-    width: 12vh;
+    width: 6vw;
     height: 5vh;
     background-color: #e0d5ce;
     color: #f57818;
@@ -62,7 +62,7 @@
 }
 
 .bag {
-    width: 17vh;
+    width: 9vw;
     height: 5vh;
     background-color: white;
     color: #f57818;
@@ -72,12 +72,25 @@
 }
 
 .liked {
-    margin-left: 1vh;
-    width: 19vh;
+    margin-left: 1vw;
+    width: 9vw;
     height: 5vh;
     background-color: white;
     color: #f57818;
     border: 2px solid #e0d5ce;
     font-size: 16pt;
 }
+.card {
+    width: 20vw;
+    height: 30vh;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+    
+    .card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
 
+.container {
+    padding: 2px 16px;
+}
