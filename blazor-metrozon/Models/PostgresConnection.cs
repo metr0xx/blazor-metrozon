@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using blazor_metrozon.Data;
 
 namespace blazor_metrozon.Models
 {
@@ -13,8 +12,9 @@ namespace blazor_metrozon.Models
         public static List<Product> ShowProducts()
         {
             List<Product> products = new List<Product>();
-            StreamReader rd = new StreamReader("./Data/data.txt");
+            StreamReader rd = new StreamReader("C:/data/string.txt");
             string con_str = rd.ReadLine();
+        
             NpgsqlConnection con = new NpgsqlConnection(con_str);
             con.Open();
             NpgsqlCommand com = new NpgsqlCommand("SELECT * FROM product", con);
