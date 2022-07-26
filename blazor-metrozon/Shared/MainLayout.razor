@@ -9,6 +9,7 @@
 <link href='https://css.gg/menu.css' rel='stylesheet'>
 <link href='https://css.gg/heart.css' rel='stylesheet'>
 <link href='https://css.gg/shopping-cart.css' rel='stylesheet'>
+<link href='https://css.gg/eye.css' rel='stylesheet'>
 
 
 <div class="page">
@@ -22,23 +23,28 @@
             <button class="liked"><span class=d-inline-block style="height: 11px; width: 22px"><i class="gg-heart"></i></span>Избранное</button>
         </div>
     </div>
-    <div class="row"> 
-    @for (int i = 0; i < products.Count; i++)
-    {
-        <button class="card">
-            <div class="container">
-                <p><img src="images/noph.png" width="300" height="240"></p>
-                <h4><b>@products[i].Title</b></h4>  
+    <div class="row">
+        @for (int i = 0; i < products.Count; i++)
+        {
+            <div class="row">
+                <button class="card">
+                    <div class="container">
+                        <p><img src="images/noph.png" width="300" height="240"></p>
+                        <h4><b>@products[i].Title</b></h4>
+                    </div>
+                </button>
+                <div class="card-button-col">
+                    <button class="card-button" title="Добавить в избранное"><span class=d-inline-block><i class="gg-heart"></i></span></button>
+                    <button class="card-button" title="Добавить в корзину"><span class=d-inline-block><i class="gg-shopping-cart"></i></span></button>
+                    <button class="card-button" title="Посмотреть похожее"><span class=d-inline-block><i class="gg-eye"></i></span></button>
+                </div>
             </div>
-        </button> 
-    }
+        }
     </div>
 </div>
 
 @code {
     List<Product> products = new List<Product>(PostgresConnection.ShowProducts());
-
-
 }
 
 

@@ -85,6 +85,7 @@
     height: 40vh;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
+    margin-left: 2vw;
 }
     
     .card:hover {
@@ -93,4 +94,19 @@
 
 .container {
     padding: 2px 16px;
+    flex-direction: column;
 }
+.product-info {
+    flex-direction: row
+}
+.card-button {
+    width: 3vw;
+    height: 5vh;
+    background-color: white;
+    border: none;
+}
+.card-button-col {
+    flex-direction: column;
+    width: 3vw;
+}
+
