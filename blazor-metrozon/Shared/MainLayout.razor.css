@@ -21,13 +21,13 @@
 
 .Metrozon {
     position: relative;
-    margin-right: 5vw;
-    width: 6vw;
-    height: 6vh;
+    margin-right: 3vw;
+    width: 12vw;
+    height: 10vh;
     background-color: transparent;
     color: #f57818;
     border: none;
-    font-size: 30pt
+    font-size: 35pt
 }
 
 .catalog {
@@ -82,7 +82,7 @@
 }
 .card {
     width: 20vw;
-    height: 30vh;
+    height: 40vh;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
 }
