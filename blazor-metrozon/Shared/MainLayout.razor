@@ -13,6 +13,7 @@
 
 
 <div class="page">
+
     <div class="grad">
         <div class="topbar">
             <button class="Metrozon">Metrozon</button>
@@ -26,24 +27,36 @@
     <div class="row">
         @for (int i = 0; i < products.Count; i++)
         {
+
+
             <div class="row">
-                <button class="card">
+                <button class="card" @onmouseover="change" @onmousedown="change">
                     <div class="container">
                         <p><img src="images/noph.png" width="300" height="240"></p>
                         <h4><b>@products[i].Title</b></h4>
+                        <h5><b>@products[i].Price ₽</b></h5>
+                        <h6>Осталось @products[i].Amount шт.</h6>
                     </div>
                 </button>
+
+
                 <div class="card-button-col">
                     <button class="card-button" title="Добавить в избранное"><span class=d-inline-block><i class="gg-heart"></i></span></button>
                     <button class="card-button" title="Добавить в корзину"><span class=d-inline-block><i class="gg-shopping-cart"></i></span></button>
                     <button class="card-button" title="Посмотреть похожее"><span class=d-inline-block><i class="gg-eye"></i></span></button>
                 </div>
+
             </div>
         }
     </div>
 </div>
 
 @code {
+    bool mouseOnElement = false;
+    public void change()
+    {
+        mouseOnElement = true ? mouseOnElement == false : mouseOnElement = false;
+    }
     List<Product> products = new List<Product>(PostgresConnection.ShowProducts());
 }
 
