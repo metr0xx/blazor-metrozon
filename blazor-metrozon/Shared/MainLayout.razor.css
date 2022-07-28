@@ -63,13 +63,24 @@
 }
 
 .bag {
-    min-width: 9vw;
-    min-height: 5vh;
+    width: 4vw;
+    height: 14vh;
     background-color: white;
     color: #f57818;
-    margin-left: 2vh;
+    position: absolute;
+    z-index: 9999;
     border: 2px solid #e0d5ce;
     font-size: 16pt;
+    position: fixed;
+    right: 0;
+    top: 50%;    
+    border-start-start-radius: 37px;
+    border-end-start-radius: 37px;
+    
+}
+.bag-icons {
+    flex-direction: row;
+    display: inline;
 }
 
 .liked {

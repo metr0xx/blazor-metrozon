@@ -10,6 +10,7 @@
 <link href='https://css.gg/heart.css' rel='stylesheet'>
 <link href='https://css.gg/shopping-cart.css' rel='stylesheet'>
 <link href='https://css.gg/eye.css' rel='stylesheet'>
+<link href='https://css.gg/arrow-bottom-left.css' rel='stylesheet'>
 
 
 <div class="page">
@@ -20,11 +21,11 @@
             <button class="catalog"><span class="d-inline-block" style="height: 7px; width: 30px"><i class="gg-menu"></i></span>Каталог</button>
             <input class="input" placeholder="Введите название товара" />
             <button class="search"><span class="d-inline-block"><i class="gg-search" style="width: 17px; height: 17px;"></i></span></button>
-            <button class="bag"><span class=d-inline-block style="height: 17px; width: 28px"><i class="gg-shopping-cart"></i></span>Корзина</button>
+
             <button class="liked"><span class=d-inline-block style="height: 11px; width: 22px"><i class="gg-heart"></i></span>Избранное</button>
         </div>
     </div>
-   
+
     <div class="row">
         @for (int i = 0; i < products.Count; i++)
         {
@@ -50,6 +51,14 @@
             </div>
         }
     </div>
+    <button class="bag">
+        <div class="d-inline-block">
+        <div class="row" style="right: 50%">
+            <img src="images/leftarrow.png" style="height: 4vh; width: 2vw">
+            <img src="images/shopping-basket.png" style="height: 4vh; width: 2vw">
+        </div>
+        </div>
+    </button>
 </div>
 
 @code {
