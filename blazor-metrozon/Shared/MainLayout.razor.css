@@ -62,112 +62,74 @@
     border: 2px solid #e0d5ce
 }
 
-.bag-disactive {
-    width: 4vw;
+.bag {
+    width: 5vw;
     height: 14vh;
     background-color: white;
     color: #f57818;
-    position: absolute;
     border: 2px solid #e0d5ce;
     font-size: 16pt;
-    right: 0;
-    top: 50%;
     border-start-start-radius: 37px;
     border-end-start-radius: 37px;
     touch-action: none;
     transition: 0.5s;
 }
-.bag-active {
-    width: 4vw;
-    height: 14vh;
-    background-color: white;
-    color: #f57818;
-    position: absolute;
-    border: 2px solid #e0d5ce;
-    font-size: 16pt;
-    right: 50%;
-    top: 50%;
-    border-start-start-radius: 37px;
-    border-end-start-radius: 37px;
-    touch-action: none;
-    transition: 0.5s;
-}
-@keyframes slideBagLeft {
-    from {
-        right: 0
-    }
-    to {
-        right: 40%;
-    }
-}
-@keyframes slideBarRigth {
-    from {
-        right: 40%
-    }
-    to {
-        right: 0;
-    }
-
     .bag:hover {
-        width: 6vw
+        width: 7vw
     }
-
-
-@keyframes shortSlideLeft {
-    from {
-        margin-right: 0vw
-    }
-
-    to {
-        margin-right: 1vw
-    }
-}
 
 .bag-icons {
     flex-direction: row;
     display: inline;
 }
 
-.bag-inside-on {
+.bag-inside {
     transition: 0.4s;
     background-color: orange;
-    right: 0;
-    bottom: 0;
-    position: absolute;
-    z-index: 9999;
-    animation: showRight 0.5s;
-}
-.bag-inside-off {
-    transition: 0.4s;
-    background-color: orange;
-    right: -50%;
-    bottom: 0;
-    position: absolute;
-    z-index: 9999;
-    animation: showLeft 0.5s ;
-}
-
-
+    margin-left: -.36em;
+    width: 20vw;
+    height: 50vh;
     
-@keyframes bagSlideLeft {
-    to {
-        left: 100%
-    }
+}
+.bag-no-animate {
+    flex-direction: row;
+    position: absolute;
+    z-index: 9999;
+    top: 50%;
+    display: inline-block;
+    right: -19%;
+    position: fixed;
+}
+.bag-animate-left {
+    flex-direction: row;
+    animation: slideLeft 1s;
+    position: absolute;
+    z-index: 9999;
+    right: 0;
+    top: 50%;
+    position: fixed;
+}
+.bag-animate-right {
+    flex-direction: row;
+    animation: slideRight 1s;
+    position: absolute;
+    z-index: 9999;
+    right: -19%;
+    top: 50%;
+    position: fixed;
 }
 
-@keyframes showLeft {
+@keyframes slideRight {
     from {
         right: 0;
     }
 
     to {
-        opacity: 0;
-        
-        right: -100%;
+        right: -19%;
     }
 }
 
-@keyframes showRight {
+@keyframes slideLeft {
 
     from {
         right: -100%;
