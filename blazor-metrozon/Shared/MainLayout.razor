@@ -26,13 +26,13 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" style="margin-left: 0.5vw; margin-top: 1vh;">
         @for (int i = 0; i < products.Count; i++)
         {
 
 
-            <div class="row">
-                <button class="card" @onmouseover="change" @onmousedown="change">
+            <div class="row" style="margin-left: 1vw">
+                <button class="card">
                     <div class="container">
                         <p><img src="images/noph.png" width="300" height="240"></p>
                         <h4><b>@products[i].Title</b></h4>
@@ -51,7 +51,7 @@
             </div>
         }
     </div>
-    <button class="bag">
+    <button class="bag" @onclick="change">
         <div class="d-inline-block">
         <div class="row" style="right: 50%">
             <img src="images/leftarrow.png" style="height: 4vh; width: 2vw">
@@ -59,13 +59,33 @@
         </div>
         </div>
     </button>
+    @if(bagOpen)
+    {
+       <div class="bag-inside-on">ABOOOOOOOOOOOOOBA</div>
+    }
+    @if(shouldHide)
+    {
+        <div class="bag-inside-off">ABOOOOOOOOOOOOOBA</div>
+    }
 </div>
-
+    
 @code {
-    bool mouseOnElement = false;
+    bool bagOpen = false;
+    bool shouldHide = false;
     public void change()
     {
-        mouseOnElement = true ? mouseOnElement == false : mouseOnElement = false;
+        if(bagOpen == false)
+        {
+            bagOpen = true;
+            shouldHide = false;
+        }
+        else
+        {
+            bagOpen = false;
+            shouldHide = true;
+        }
+        //bagOpen = true ? bagOpen == false : bagOpen = false;
+
     }
     List<Product> products = new List<Product>(PostgresConnection.ShowProducts());
 }

@@ -62,25 +62,120 @@
     border: 2px solid #e0d5ce
 }
 
-.bag {
+.bag-disactive {
     width: 4vw;
     height: 14vh;
     background-color: white;
     color: #f57818;
     position: absolute;
-    z-index: 9999;
     border: 2px solid #e0d5ce;
     font-size: 16pt;
-    position: fixed;
     right: 0;
-    top: 50%;    
+    top: 50%;
     border-start-start-radius: 37px;
     border-end-start-radius: 37px;
-    
+    touch-action: none;
+    transition: 0.5s;
 }
+.bag-active {
+    width: 4vw;
+    height: 14vh;
+    background-color: white;
+    color: #f57818;
+    position: absolute;
+    border: 2px solid #e0d5ce;
+    font-size: 16pt;
+    right: 50%;
+    top: 50%;
+    border-start-start-radius: 37px;
+    border-end-start-radius: 37px;
+    touch-action: none;
+    transition: 0.5s;
+}
+@keyframes slideBagLeft {
+    from {
+        right: 0
+    }
+    to {
+        right: 40%;
+    }
+}
+@keyframes slideBarRigth {
+    from {
+        right: 40%
+    }
+    to {
+        right: 0;
+    }
+
+    .bag:hover {
+        width: 6vw
+    }
+
+
+@keyframes shortSlideLeft {
+    from {
+        margin-right: 0vw
+    }
+
+    to {
+        margin-right: 1vw
+    }
+}
+
 .bag-icons {
     flex-direction: row;
     display: inline;
+}
+
+.bag-inside-on {
+    transition: 0.4s;
+    background-color: orange;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    z-index: 9999;
+    animation: showRight 0.5s;
+}
+.bag-inside-off {
+    transition: 0.4s;
+    background-color: orange;
+    right: -50%;
+    bottom: 0;
+    position: absolute;
+    z-index: 9999;
+    animation: showLeft 0.5s ;
+}
+
+
+    
+@keyframes bagSlideLeft {
+    to {
+        left: 100%
+    }
+}
+
+@keyframes showLeft {
+    from {
+        right: 0;
+    }
+
+    to {
+        opacity: 0;
+        
+        right: -100%;
+    }
+}
+
+@keyframes showRight {
+
+    from {
+        right: -100%;
+    }
+
+    to {
+        right: 0;
+    }
 }
 
 .liked {
@@ -97,10 +192,9 @@
     min-width: 23vw;
     min-height: 43vh;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-    margin-left: 3vw;
+    transition: 0.4s;
 }
-    
+
     .card:hover {
         box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     }
@@ -109,17 +203,19 @@
     padding: 2px 16px;
     flex-direction: column;
 }
+
 .product-info {
     flex-direction: row
 }
+
 .card-button {
     width: 3vw;
     height: 5vh;
     background-color: white;
     border: none;
 }
+
 .card-button-col {
     flex-direction: column;
     width: 3vw;
 }
-
