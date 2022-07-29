@@ -16,12 +16,15 @@
 <div class="page">
 
     <div class="grad">
+        <div class=seller-mod>
+            <button class="seller-mod-btn">покупатель</button>
+            <button class="seller-mod-btn">продавец</button>
+        </div>
         <div class="topbar">
             <button class="Metrozon">Metrozon</button>
             <button class="catalog"><span class="d-inline-block" style="height: 7px; width: 30px"><i class="gg-menu"></i></span>Каталог</button>
             <input class="input" placeholder="Введите название товара" />
             <button class="search"><span class="d-inline-block"><i class="gg-search" style="width: 17px; height: 17px;"></i></span></button>
-
             <button class="liked"><span class=d-inline-block style="height: 11px; width: 22px"><i class="gg-heart"></i></span>Избранное</button>
         </div>
     </div>
@@ -66,12 +69,12 @@
 
 @code {
     int state = 0;
-    string[] statements = { "bag-no-animate", "bag-animate-left", "bag-animate-right" };
+    string[] statements = { "bag-animate-left", "bag-animate-right" };
     string bag_class = "bag-no-animate";
     public void change()
     {
+        bag_class = statements[state % 2];
         state += 1;
-        bag_class = statements[state % 3];
     }
     List<Product> products = new List<Product>(PostgresConnection.ShowProducts());
 }
