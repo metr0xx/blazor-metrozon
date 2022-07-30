@@ -14,16 +14,15 @@
 
 
 <div class="page">
-
     <div class="grad">
         <div class="mod-menu">
-            <div class=seller-mod>
-                <button class="seller-mod-btn">покупатель</button>
-                <button class="seller-mod-btn">продавец</button>
+            <div class="seller-mod">
+                <button class="seller-mod-btn" @onclick="changeMod">покупатель</button>
+                <button class="seller-mod-btn" @onclick="changeMod">продавец</button>
             </div>
-            <div class="row" style="margin-top: 1vh; margin-left: 1.5vw">
+            <div class="row" style="margin-top: 1.5vh; margin-left: 3.5vw">
                 <i class="choose-mod-txt">Выберите режим</i>
-                <img src="images/downarrow.png" style="height: 5vh; width: 4vw; margin-left: 2vw;">
+                <img src="images/downarrow.png" style="height: 4vh; width: 3vw; margin-left: 1vw;">
             </div>
         </div>
         <div class="topbar">
@@ -34,55 +33,67 @@
             <button class="liked"><span class=d-inline-block style="height: 11px; width: 22px"><i class="gg-heart"></i></span>Избранное</button>
         </div>
     </div>
+        @if (buyermod)
+    {
+        List<Product> products = new List<Product>(PostgresConnection.ShowProducts());
+        <div class="row" style="margin-left: 0.5vw; margin-top: 1vh;">
+            @for (int i = 0; i < products.Count; i++)
+            {
+                <div class="row" style="margin-left: 1vw">
+                    <button class="card">
+                        <div class="container">
+                            <p><img src="images/noph.png" width="300" height="240"></p>
+                            <h4><b>@products[i].Title</b></h4>
+                            <h5><b>@products[i].Price ₽</b></h5>
+                            <h6>Осталось @products[i].Amount шт.</h6>
+                        </div>
+                    </button>
 
-    <div class="row" style="margin-left: 0.5vw; margin-top: 1vh;">
-        @for (int i = 0; i < products.Count; i++)
-        {
-            <div class="row" style="margin-left: 1vw">
-                <button class="card">
-                    <div class="container">
-                        <p><img src="images/noph.png" width="300" height="240"></p>
-                        <h4><b>@products[i].Title</b></h4>
-                        <h5><b>@products[i].Price ₽</b></h5>
-                        <h6>Осталось @products[i].Amount шт.</h6>
+                    <div class="card-button-col">
+                        <button class="card-button" title="Добавить в избранное"><span class=d-inline-block><i class="gg-heart"></i></span></button>
+                        <button class="card-button" title="Добавить в корзину"><span class=d-inline-block><i class="gg-shopping-cart"></i></span></button>
+                        <button class="card-button" title="Посмотреть похожее"><span class=d-inline-block><i class="gg-eye"></i></span></button>
+                    </div>
+
+                </div>
+            }
+        </div>
+        <div class=@bag_class>
+            <div class="row">
+                <button class="bag" @onclick="AnimateBag">
+                    <div class="d-inline-block">
+                        <div class="row" style="right: 50%">
+                            <img src="images/leftarrow.png" style="height: 4vh; width: 2vw">
+                            <img src="images/shopping-basket.png" style="height: 4vh; width: 2vw">
+                        </div>
                     </div>
                 </button>
-
-
-                <div class="card-button-col">
-                    <button class="card-button" title="Добавить в избранное"><span class=d-inline-block><i class="gg-heart"></i></span></button>
-                    <button class="card-button" title="Добавить в корзину"><span class=d-inline-block><i class="gg-shopping-cart"></i></span></button>
-                    <button class="card-button" title="Посмотреть похожее"><span class=d-inline-block><i class="gg-eye"></i></span></button>
-                </div>
-
+                <div class="bag-inside"></div>
             </div>
+        </div> 
         }
-    </div>
-    <div class=@bag_class>
-        <div class="row">
-            <button class="bag" @onclick="change">
-                <div class="d-inline-block">
-                    <div class="row" style="right: 50%">
-                        <img src="images/leftarrow.png" style="height: 4vh; width: 2vw">
-                        <img src="images/shopping-basket.png" style="height: 4vh; width: 2vw">
-                    </div>
-                </div>
-            </button>
-            <div class="bag-inside"></div>
-        </div>
-    </div>
 </div>
 
 @code {
     int state = 0;
+    bool buyermod = true;
     string[] statements = { "bag-animate-left", "bag-animate-right" };
     string bag_class = "bag-no-animate";
-    public void change()
+    public void AnimateBag()
     {
         bag_class = statements[state % 2];
         state += 1;
     }
-    List<Product> products = new List<Product>(PostgresConnection.ShowProducts());
+    public void changeMod()
+    {
+        if (buyermod == true) buyermod = false;
+        else
+        {   buyermod = true;
+            bag_class = "bag-no-animate";
+        } 
+        //buyermod = true ? buyermod = false : buyermod = true;
+    }
+   
 }
 
 
