@@ -1,5 +1,4 @@
 .page {
-    
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
@@ -15,15 +14,18 @@
     display: flex;
     transition: 1s;
 }
+
 .grad-sell-mod {
     background-image: linear-gradient(45deg, #f5b690 0.1%, #ffe0cf, #ede1da);
     height: 20vh;
     transition: 1s;
     display: flex;
 }
+
 .choose-mod-txt {
     font-size: 15pt;
 }
+
 .mod-menu {
     position: absolute;
     right: 5%;
@@ -37,9 +39,11 @@
     transition: .3s;
     z-index: 2;
 }
+
     .mod-menu:hover {
         transform: translateY(60px);
     }
+
 .mod-menu-up {
     position: absolute;
     right: 5%;
@@ -49,6 +53,7 @@
     border-end-start-radius: 55px;
     border-end-end-radius: 55px;
 }
+
 .mod-menu-down {
     position: absolute;
     right: 5%;
@@ -58,6 +63,7 @@
     border-end-start-radius: 55px;
     border-end-end-radius: 55px;
 }
+
 .seller-mod-btn {
     text-decoration: none;
     display: inline-block;
@@ -76,8 +82,8 @@
     background: white;
     box-shadow: 0 8px 15px rgba(0, 0, 0, .1);
     transition: .3s;
-    
 }
+
     .seller-mod-btn:hover {
         background: #fc9c0a;
         box-shadow: 0 8px 14px #fc9c0a;
@@ -90,6 +96,7 @@
     margin-top: 5vh;
     margin-left: 1vw;
 }
+
 .topbar {
     flex-direction: row;
     margin: auto;
@@ -149,6 +156,7 @@
     transition: 0.5s;
     margin-top: 76%;
 }
+
     .bag:hover {
         width: 7vw;
         margin-top: 72%;
@@ -166,14 +174,16 @@
     width: 30vw;
     height: 100vh;
 }
+
 .bag-no-animate {
     flex-direction: row;
     position: absolute;
-    z-index: 9999;
+    z-index: 2;
     display: inline-block;
     right: -29%;
     position: fixed;
 }
+
 .bag-animate-left {
     flex-direction: row;
     animation: slideLeft 1s;
@@ -182,6 +192,7 @@
     right: 0;
     position: fixed;
 }
+
 .bag-animate-right {
     flex-direction: row;
     animation: slideRight 1s;
@@ -253,3 +264,44 @@
     flex-direction: column;
     width: 3vw;
 }
+
+.seller-mod-header {
+    justify-content: center;
+    display: flex;
+    margin-top: 2vh;
+}
+
+.product-list {
+    margin-top: 2vh;
+    flex-direction: column;
+    margin-right: 50%;
+}
+.product-row {
+    margin-top: 1vh;
+    flex-direction: row;
+}
+.add-product-btn {
+    width: 18vw;
+    height: 8vh;
+    border-radius: 40px;
+    background-color: white;
+    border: 2px solid coral;
+    position: absolute;
+    bottom: 5%;
+    left: 41%;
+    font-size: 15pt;
+    transition: .2s ease-in-out;
+    font-family: 'Montserrat', sans-serif;
+}
+.add-product-btn {
+    background: linear-gradient(90deg, rgba(255, 255, 255, .1), rgba(255, 255, 255, .5));
+}
+.add-product-btn:hover {
+    background: #fe6637;
+    color: #fff;
+}
+
+    .add-product-btn:hover:before {
+        left: 150px;
+        transition: .5s ease-in-out;
+    }

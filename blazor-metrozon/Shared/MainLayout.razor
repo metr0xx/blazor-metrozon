@@ -28,12 +28,12 @@
         <div class="topbar">
             <button class="Metrozon">Metrozon</button>
             <button class="catalog"><span class="d-inline-block" style="height: 7px; width: 30px"><i class="gg-menu"></i></span>Каталог</button>
-            <input class="input" placeholder="Введите название товара" />
+            <input class="input" placeholder="@placeholder" />
             <button class="search"><span class="d-inline-block"><i class="gg-search" style="width: 17px; height: 17px;"></i></span></button>
             <button class="liked"><span class=d-inline-block style="height: 11px; width: 22px"><i class="gg-heart" style="position: relative; z-index: 1"></i></span>Избранное</button>
         </div>
     </div>
-        @if (buyermod)
+    @if (buyermod)
     {
         <div class="row" style="margin-left: 0.5vw; margin-top: 1vh;">
             @for (int i = 0; i < products.Count; i++)
@@ -69,20 +69,50 @@
                 </button>
                 <div class="bag-inside"></div>
             </div>
-        </div> 
+        </div>
+    }
+    else
+    {
+        if (UserProducts.Count() == 0)
+        {
+            <div>
+                У вас пока нет размещенных товаров.
+                Нажмите<button>здесь</button>, чтобы разместить товар
+            </div>
         }
+        else
+        {
+            <h2 class="seller-mod-header">Ваши товары</h2>
+            foreach (var product in UserProducts)
+            {
+                <div class="product-list">
+
+                    <div class="product-row">
+                        <img src="images/noph.png" widtg="50" height="80">
+                        @product.Title, @product.Price ₽ (@product.Amount Шт.)
+                        @product.Description
+                        <button>Изменить</button>
+                        <button>X</button>
+                    </div>
+                </div>
+            }
+            <button class="add-product-btn">Добавить новый товар</button>
+        }
+        
+    }
 </div>
 
 @code {
-    User user = new User(1, "Mikle", "Frolov", 1200, "88005553535", "abobz@aboba.com", "12345");
+    static User user = new User(1, "Mikle", "Frolov", 1200, "88005553535", "abobz@aboba.com", "12345");
 
     int state = 0;
     bool buyermod = true;
     string[] statements = { "bag-animate-left", "bag-animate-right" };
     string bag_class = "bag-no-animate";
     string grad_class = "grad";
-    List<Product> products = new List<Product>(PostgresConnection.ShowProducts());
-
+    static List<Product> products = new List<Product>(PostgresConnection.ShowProducts());
+    List<Product> UserProducts = new List<Product>(FillUserProducts());
+    string placeholder = "Введите название товара";
     public void AnimateBag()
     {
         bag_class = statements[state % 2];
@@ -90,25 +120,28 @@
     }
     public void changeMod()
     {
-        if (buyermod) {
+        if (buyermod)
+        {
             buyermod = false;
             grad_class = "grad-sell-mod";
+            placeholder = "Поиск по вашим товарам";
         }
         else
-        {   buyermod = true;
+        {
+            buyermod = true;
             bag_class = "bag-no-animate";
             grad_class = "grad";
-        } 
-        ;
-    }
-    public List<Product> FillUserProducts()
-    {
-        List<Product> UserProducts = new List<Product>();
-        for(int i = 0; i < products.Count(); i++)
-        {
-            if (products[i].Seller_id == user.User_id) UserProducts.Add(products[i]);
+            placeholder = "Введите название товара";
         }
-        return UserProducts;
+    }
+    public static List<Product> FillUserProducts()
+    {
+        List<Product> userproducts = new List<Product>();
+        for (int i = 0; i < products.Count(); i++)
+        {
+            if (products[i].Seller_id == user.User_id) userproducts.Add(products[i]);
+        }
+        return userproducts;
     }
 
 }
