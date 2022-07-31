@@ -13,6 +13,13 @@
     background-image: linear-gradient(45deg, #f5b690 0.1%, #ffe0cf, #ede1da);
     height: 40vh;
     display: flex;
+    transition: 1s;
+}
+.grad-sell-mod {
+    background-image: linear-gradient(45deg, #f5b690 0.1%, #ffe0cf, #ede1da);
+    height: 20vh;
+    transition: 1s;
+    display: flex;
 }
 .choose-mod-txt {
     font-size: 15pt;
@@ -28,6 +35,7 @@
     border-end-end-radius: 55px;
     top: -11%;
     transition: .3s;
+    z-index: 2;
 }
     .mod-menu:hover {
         transform: translateY(60px);
@@ -70,7 +78,6 @@
     transition: .3s;
     
 }
-
     .seller-mod-btn:hover {
         background: #fc9c0a;
         box-shadow: 0 8px 14px #fc9c0a;

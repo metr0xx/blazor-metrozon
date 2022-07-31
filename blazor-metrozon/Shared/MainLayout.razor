@@ -14,7 +14,7 @@
 
 
 <div class="page">
-    <div class="grad">
+    <div class=@grad_class>
         <div class="mod-menu">
             <div class="seller-mod">
                 <button class="seller-mod-btn" @onclick="changeMod">покупатель</button>
@@ -30,12 +30,11 @@
             <button class="catalog"><span class="d-inline-block" style="height: 7px; width: 30px"><i class="gg-menu"></i></span>Каталог</button>
             <input class="input" placeholder="Введите название товара" />
             <button class="search"><span class="d-inline-block"><i class="gg-search" style="width: 17px; height: 17px;"></i></span></button>
-            <button class="liked"><span class=d-inline-block style="height: 11px; width: 22px"><i class="gg-heart"></i></span>Избранное</button>
+            <button class="liked"><span class=d-inline-block style="height: 11px; width: 22px"><i class="gg-heart" style="position: relative; z-index: 1"></i></span>Избранное</button>
         </div>
     </div>
         @if (buyermod)
     {
-        List<Product> products = new List<Product>(PostgresConnection.ShowProducts());
         <div class="row" style="margin-left: 0.5vw; margin-top: 1vh;">
             @for (int i = 0; i < products.Count; i++)
             {
@@ -75,10 +74,15 @@
 </div>
 
 @code {
+    User user = new User(1, "Mikle", "Frolov", 1200, "88005553535", "abobz@aboba.com", "12345");
+
     int state = 0;
     bool buyermod = true;
     string[] statements = { "bag-animate-left", "bag-animate-right" };
     string bag_class = "bag-no-animate";
+    string grad_class = "grad";
+    List<Product> products = new List<Product>(PostgresConnection.ShowProducts());
+
     public void AnimateBag()
     {
         bag_class = statements[state % 2];
@@ -86,14 +90,27 @@
     }
     public void changeMod()
     {
-        if (buyermod == true) buyermod = false;
+        if (buyermod) {
+            buyermod = false;
+            grad_class = "grad-sell-mod";
+        }
         else
         {   buyermod = true;
             bag_class = "bag-no-animate";
+            grad_class = "grad";
         } 
-        //buyermod = true ? buyermod = false : buyermod = true;
+        ;
     }
-   
+    public List<Product> FillUserProducts()
+    {
+        List<Product> UserProducts = new List<Product>();
+        for(int i = 0; i < products.Count(); i++)
+        {
+            if (products[i].Seller_id == user.User_id) UserProducts.Add(products[i]);
+        }
+        return UserProducts;
+    }
+
 }
 
 
