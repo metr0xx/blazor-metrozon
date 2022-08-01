@@ -96,9 +96,39 @@
                     </div>
                 </div>
             }
-            <button class="add-product-btn">Добавить новый товар</button>
+            <button class="add-product-btn" @onclick="ShowDialog">Добавить новый товар</button>
         }
-        
+        if (showDialog)
+        {  
+            <div class="new-product-dialog">
+                
+                <div class="input-col">
+                    <div class="input-line">
+                        <div class="input-hint">Название товара</div>
+                        <input class="input-prod-info">
+                    </div>
+                    <div class="input-line">
+                        <div class="input-hint">Стоимость товара</div>
+                        <input class="input-prod-info">
+
+                    </div class="input-line">
+
+                    <div class="input-line">
+                        <div class="input-hint">Количество (шт)</div>
+                        <input class="input-prod-info">
+
+                    </div>
+
+                    <div class="input-line">
+                        <div class="input-hint">Описание</div>
+                        <textarea class="input-prod-info"></textarea>
+
+                    </div>
+
+
+                </div>
+            </div>
+        }
     }
 </div>
 
@@ -107,6 +137,7 @@
 
     int state = 0;
     bool buyermod = true;
+    bool showDialog = false;
     string[] statements = { "bag-animate-left", "bag-animate-right" };
     string bag_class = "bag-no-animate";
     string grad_class = "grad";
@@ -133,6 +164,11 @@
             grad_class = "grad";
             placeholder = "Введите название товара";
         }
+    }
+    public void ShowDialog()
+    {
+        if (showDialog) showDialog = false;
+        else showDialog = true;
     }
     public static List<Product> FillUserProducts()
     {

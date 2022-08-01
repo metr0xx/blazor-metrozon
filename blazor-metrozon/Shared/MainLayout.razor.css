@@ -305,3 +305,37 @@
         left: 150px;
         transition: .5s ease-in-out;
     }
+.new-product-dialog {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #ded0c8;
+    width: 35vw;
+    height: 40vh;
+    margin-right: -50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    border-radius: 50px;
+}
+.input-line {
+    display: flex;
+    flex-direction: row;
+    margin-top: 3vh;
+}
+.input-prod-info {
+    width: 20vw;
+    margin: 0 auto;
+    border-radius: 10px;
+    border: 1px solid #ffbc03;
+}
+.input-col {
+    flex-direction: column;
+    display: flex;
+    margin-left: 2vw;
+}
+.input-hint {
+    font-size: 11pt;
+    width: 1vw;
+}

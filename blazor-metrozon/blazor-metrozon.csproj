@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\images\11.jpg" />
     <None Include="wwwroot\images\nikon-d50-lens-1056393.jpg" />
     <None Include="wwwroot\images\noph.png" />
   </ItemGroup>
