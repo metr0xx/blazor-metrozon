@@ -8,14 +8,12 @@ namespace blazor_metrozon.Models
     public class PostgresConnection
     {
         User user = new User(1, "Mikle", "Frolov", 1200, "88005553535", "abobz@aboba.com", "12345");
-
+        static StreamReader rd = new StreamReader("C:/data/string.txt");
+        static string con_str = rd.ReadLine();
+        static NpgsqlConnection con = new NpgsqlConnection(con_str);
         public static List<Product> ShowProducts()
         {
             List<Product> products = new List<Product>();
-            StreamReader rd = new StreamReader("C:/data/string.txt");
-            string con_str = rd.ReadLine();
-        
-            NpgsqlConnection con = new NpgsqlConnection(con_str);
             con.Open();
             NpgsqlCommand com = new NpgsqlCommand("SELECT * FROM product", con);
             NpgsqlDataReader reader = com.ExecuteReader();
@@ -23,7 +21,7 @@ namespace blazor_metrozon.Models
             {
                 try
                 {
-                    Product product = new Product(          
+                    Product product = new Product(
                     reader.GetInt32(0),
                     reader.GetInt32(1),
                     reader.GetInt32(2),
@@ -39,41 +37,68 @@ namespace blazor_metrozon.Models
             con.Close();
             return products;
         }
+        public List<int> SyncBag(int product_id, bool NewElem)
+        {
+            con.Open();
+            NpgsqlCommand SearchProductsByUserId = new NpgsqlCommand($"SELECT * FRPOM users WHERE user_id={user.User_id}", con);
+            NpgsqlDataReader reader = SearchProductsByUserId.ExecuteReader();
+            string UserBagData = "";
+            List<int> BagData = new List<int>();
+            try
+            {
+                UserBagData = reader.GetString(7);
+                
+                for (int i = 0; i < UserBagData.Length; i += 2) BagData.Add(Convert.ToInt32(UserBagData[i]));
+                UserBagData = "";
+            }
+            catch { }
+
+            finally
+            {
+                if (NewElem) BagData.Add(product_id);
+                else BagData.Remove(product_id);
+                for (int i = 0; i < BagData.Count; i++) UserBagData += $"{BagData[i]};";
+                NpgsqlCommand UpdateBag = new NpgsqlCommand($"UPDATE users SET products-in-bag = {UserBagData} WHERE user_id={user.User_id}", con);
+            }
+            return BagData;
+        }
         void AddProduct(string[] values)
-        {
-
-        }
-        void DeleteProduct(int product_id)
-        {
-
-        }
-        void SellProduct(int product_id)
-        {
-
-        }
-
-
-        /*public static async void Connection()
-        {
-            String connectionString = "Server=localhost;Port=5432;User=postgres;Password=Vbifyz5558;Database=metrozonDB;";
-            await using var conn = new NpgsqlConnection(connectionString);
-            await conn.OpenAsync();
-            await using (var cmd = new NpgsqlCommand("INSERT INTO users (Name, Surname, Money, Phone, Email, Password) VALUES ('Bob', 'Semenov', 15000, '865384358', 'bs@bww.com', '123')", conn))
             {
-                cmd.Parameters.AddWithValue("Hello world");
-                await cmd.ExecuteNonQueryAsync();
+
             }
-            List<string> res = new List<string>();
-            await using (var cmd = new NpgsqlCommand("SELECT * FROM users", conn))
-            await using (var reader = await cmd.ExecuteReaderAsync())
+
+            void DeleteProduct(int product_id)
             {
-                while (await reader.ReadAsync())
+
+            }
+            void SellProduct(int product_id)
+            {
+
+            }
+
+
+
+            /*public static async void Connection()
+            {
+                String connectionString = "Server=localhost;Port=5432;User=postgres;Password=Vbifyz5558;Database=metrozonDB;";
+                await using var conn = new NpgsqlConnection(connectionString);
+                await conn.OpenAsync();
+                await using (var cmd = new NpgsqlCommand("INSERT INTO users (Name, Surname, Money, Phone, Email, Password) VALUES ('Bob', 'Semenov', 15000, '865384358', 'bs@bww.com', '123')", conn))
                 {
-                    res.Add(reader.GetString(0));
+                    cmd.Parameters.AddWithValue("Hello world");
+                    await cmd.ExecuteNonQueryAsync();
                 }
-            }
-        }*/
-        
-    }
+                List<string> res = new List<string>();
+                await using (var cmd = new NpgsqlCommand("SELECT * FROM users", conn))
+                await using (var reader = await cmd.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        res.Add(reader.GetString(0));
+                    }
+                }
+            }*/
 
-}
+        }
+
+    }

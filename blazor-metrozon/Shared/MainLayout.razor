@@ -16,6 +16,7 @@
 <div class="page">
     <div class=@grad_class>
         <div class="mod-menu">
+            <div class="menu-col">
             <div class="seller-mod">
                 <button class="seller-mod-btn" @onclick="changeMod">покупатель</button>
                 <button class="seller-mod-btn" @onclick="changeMod">продавец</button>
@@ -23,6 +24,7 @@
             <div class="row" style="margin-top: 1.5vh; margin-left: 3.5vw">
                 <i class="choose-mod-txt">Выберите режим</i>
                 <img src="images/downarrow.png" style="height: 4vh; width: 3vw; margin-left: 1vw;">
+            </div>
             </div>
         </div>
         <div class="topbar">
@@ -179,7 +181,12 @@
         }
         return userproducts;
     }
-
+    public List<Product> FillBag()
+    {
+        List<Product> ProductsInBag = new List<Product>();
+        return ProductsInBag;
+    }
+    
 }
 
 
