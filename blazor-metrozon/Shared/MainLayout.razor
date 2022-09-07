@@ -36,17 +36,24 @@
         </div>
     </div>
     @if (buyermod)
-    {
+    {   
         <div class="row" style="margin-left: 0.5vw; margin-top: 1vh;">
             @for (int i = 0; i < products.Count; i++)
             {
                 <div class="row" style="margin-left: 1vw">
                     <button class="card">
                         <div class="container">
+<<<<<<< HEAD
                             <p><img src="images/noph.png" width="270" height="220"></p>
                             <h4><b>@products[i].Title</b></h4>
                             <h5><b>@products[i].Price ₽</b></h5>
                             <h6>Осталось @products[i].Amount шт.</h6>
+=======
+                            <p><img src="images/noph.png" width="275" height="200" style="margin: auto"></p>
+                            <div><b>@products[i].Title</b></div>
+                            <h6><b>@products[i].Price ₽</b></h6>
+                            <div>Осталось @products[i].Amount шт.</div>
+>>>>>>> 1a1131b97fdad66e4cdd83b36108c6791a715bb0
                         </div>
                     </button>
 
@@ -107,23 +114,23 @@
                 <div class="input-col">
                     <div class="input-line">
                         <div class="input-hint">Название товара</div>
-                        <input class="input-prod-info">
+                        <input class="input-prod-info" @bind="@newproduct_name" @oninput="@((e) => { try { newproduct_name=(string)e.Value;} catch {}})">
                     </div>
-                    <div class="input-line">
+                     <div class="input-line">
                         <div class="input-hint">Стоимость товара</div>
-                        <input class="input-prod-info">
+                        <input class="input-prod-info" @bind="@newproduct_price" @oninput="@((e) => { try {newproduct_price=(int)e.Value;} catch {}})">
 
                     </div class="input-line">
 
                     <div class="input-line">
                         <div class="input-hint">Количество (шт)</div>
-                        <input class="input-prod-info">
+                        <input class="input-prod-info" @bind="@newproduct_amount" @oninput="@((e) => { try {newproduct_amount=(int)e.Value;} catch {}})">
 
                     </div>
 
                     <div class="input-line">
                         <div class="input-hint">Описание</div>
-                        <textarea class="input-prod-info"></textarea>
+                        <textarea class="input-prod-info" @bind="@newproduct_description" @oninput="@((e) => { try {newproduct_description=(string)e.Value;} catch {}})"></textarea>
 
                     </div>
 
@@ -146,6 +153,10 @@
     static List<Product> products = new List<Product>(PostgresConnection.ShowProducts());
     List<Product> UserProducts = new List<Product>(FillUserProducts());
     string placeholder = "Введите название товара";
+    string newproduct_name;
+    int newproduct_price;
+    int newproduct_amount;
+    string newproduct_description;
     public void AnimateBag()
     {
         bag_class = statements[state % 2];
@@ -167,11 +178,13 @@
             placeholder = "Введите название товара";
         }
     }
+
     public void ShowDialog()
     {
         if (showDialog) showDialog = false;
         else showDialog = true;
     }
+
     public static List<Product> FillUserProducts()
     {
         List<Product> userproducts = new List<Product>();
@@ -181,6 +194,7 @@
         }
         return userproducts;
     }
+
     public List<Product> FillBag()
     {
         List<Product> ProductsInBag = new List<Product>();
