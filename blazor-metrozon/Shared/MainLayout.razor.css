@@ -237,13 +237,10 @@
 }
 
 .card {
-<<<<<<< HEAD
-    min-width: 18vw;
-    min-height: 38vh;
-=======
+    width: 18vw;
+    height: 38vh;
     width: 20vw;
-    height: 40vh;
->>>>>>> 1a1131b97fdad66e4cdd83b36108c6791a715bb0
+    height: 41vh;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.4s;
 }
