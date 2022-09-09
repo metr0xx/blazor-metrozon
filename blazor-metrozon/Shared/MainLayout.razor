@@ -124,11 +124,18 @@
                     </div>
 
                     <div class="input-line">
+                        <div class="input-hint">Категория</div>
+                        <input class="input-prod-info" @bind="@newproduct_category" @oninput="@((e) => { try {newproduct_category=(string)e.Value;} catch {}})">
+
+                    </div>
+
+                    <div class="input-line">
                         <div class="input-hint">Описание</div>
                         <textarea class="input-prod-info" @bind="@newproduct_description" @oninput="@((e) => { try {newproduct_description=(string)e.Value;} catch {}})"></textarea>
 
                     </div>
 
+                    <button class="add-product-btn-up">Добавить</button>
 
                 </div>
             </div>
@@ -147,11 +154,13 @@
     string grad_class = "grad";
     static List<Product> products = new List<Product>(PostgresConnection.ShowProducts());
     List<Product> UserProducts = new List<Product>(FillUserProducts());
+    List<Category> categories = new List<Category>(PostgresConnection.GetCategories());
     string placeholder = "Введите название товара";
     string newproduct_name;
     int newproduct_price;
     int newproduct_amount;
     string newproduct_description;
+    string newproduct_category;
     public void AnimateBag()
     {
         bag_class = statements[state % 2];
@@ -195,7 +204,18 @@
         List<Product> ProductsInBag = new List<Product>();
         return ProductsInBag;
     }
-    
+
+    public void SaveNewProductData() {
+        int category_id = 0;
+        for(int i = 0; i < categories.Count(); i++) {
+            if (newproduct_category == categories[i].Name)
+            {
+                category_id = categories[i].Id;
+                break;
+            }
+        }
+        PostgresConnection.AddProduct(user.User_id, category_id, newproduct_amount, newproduct_price, newproduct_name, newproduct_description);
+    }
 }
 
 

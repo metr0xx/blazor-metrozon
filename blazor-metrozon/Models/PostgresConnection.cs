@@ -22,20 +22,41 @@ namespace blazor_metrozon.Models
                 try
                 {
                     Product product = new Product(
-                    reader.GetInt32(0),
-                    reader.GetInt32(1),
-                    reader.GetInt32(2),
-                    reader.GetInt32(3),
-                    reader.GetInt32(4),
-                    reader.GetDouble(5),
-                    reader.GetString(6),
-                    reader.GetString(7));
+                        reader.GetInt32(0),
+                        reader.GetInt32(1),
+                        reader.GetInt32(2),
+                        reader.GetInt32(3),
+                        reader.GetInt32(4),
+                        reader.GetDouble(5),
+                        reader.GetString(6),
+                        reader.GetString(7));
                     products.Add(product);
                 }
                 catch { }
             }
             con.Close();
             return products;
+        }
+
+        public static List<Category> GetCategories()
+        {
+            List<Category> categories = new List<Category>();
+            con.Open();
+            NpgsqlCommand com = new NpgsqlCommand("SELECT * FROM categories", con);
+            NpgsqlDataReader reader = com.ExecuteReader();
+            while (reader.Read())
+            {
+                try
+                {
+                    Category category = new Category(
+                        reader.GetInt32(0),
+                        reader.GetString(1));
+                    categories.Add(category);
+                }
+                catch { }
+            }
+            con.Close();
+            return categories;
         }
         public List<int> SyncBag(int product_id, bool NewElem)
         {
@@ -47,7 +68,7 @@ namespace blazor_metrozon.Models
             try
             {
                 UserBagData = reader.GetString(7);
-                
+
                 for (int i = 0; i < UserBagData.Length; i += 2) BagData.Add(Convert.ToInt32(UserBagData[i]));
                 UserBagData = "";
             }
@@ -62,20 +83,23 @@ namespace blazor_metrozon.Models
             }
             return BagData;
         }
-        void AddProduct(string[] values)
-            {
+        public static void AddProduct(int seller_id, int category_id, int amount, int price, string title, string description)
+        {
+            con.Open();
+            NpgsqlCommand cmd = new NpgsqlCommand($"INSERT INTO product (seller_id, category_id, amount, price, rating, title, description) VALUSES ({1}, {2}, {3}, {4}, {5.0}, {""}, {""})");
+            cmd.ExecuteNonQuery();
+            con.Close();
+        }
 
-            }
+        void DeleteProduct(int product_id)
+        {
 
-            void DeleteProduct(int product_id)
-            {
-
-            }
-            void SellProduct(int product_id)
-            {
-
-            }
+        }
+        void SellProduct(int product_id)
+        {
 
         }
 
     }
+
+}
