@@ -46,14 +46,14 @@ namespace blazor_metrozon.Models
             NpgsqlDataReader reader = com.ExecuteReader();
             while (reader.Read())
             {
-                try
-                {
+                
+                
                     Category category = new Category(
                         reader.GetInt32(0),
                         reader.GetString(1));
                     categories.Add(category);
-                }
-                catch { }
+                
+                
             }
             con.Close();
             return categories;
@@ -86,8 +86,12 @@ namespace blazor_metrozon.Models
         public static void AddProduct(int seller_id, int category_id, int amount, int price, string title, string description)
         {
             con.Open();
-            NpgsqlCommand cmd = new NpgsqlCommand($"INSERT INTO product (seller_id, category_id, amount, price, rating, title, description) VALUSES ({1}, {2}, {3}, {4}, {5.0}, {""}, {""})");
-            cmd.ExecuteNonQuery();
+            
+                NpgsqlCommand cmd = new NpgsqlCommand($"INSERT INTO product (seller_id, category_id, amount, price, rating, title, description) VALUES ({seller_id}, {category_id}, {amount}, {price}, 4.2, '{title}', '{description}')", con);
+
+                cmd.ExecuteNonQuery();
+            
+            
             con.Close();
         }
 
