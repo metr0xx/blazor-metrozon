@@ -40,7 +40,7 @@
         <div class="row" style="margin-left: 0.5vw; margin-top: 1vh;">
             @for (int i = 0; i < products.Count; i++)
             {
-                <div class="row" style="margin-left: 1vw">
+                <div class="row" style="margin-left: 1vw; margin-top: 2vh">
                     <button class="card">
                         <div class="container">
 
@@ -135,7 +135,7 @@
 
                     </div>
 
-                    <button class="add-product-btn-up">Добавить</button>
+                    <button class="add-product-btn-up" @onclick="SaveNewProductData">Добавить</button>
 
                 </div>
             </div>
@@ -166,6 +166,7 @@
         bag_class = statements[state % 2];
         state += 1;
     }
+
     public void changeMod()
     {
         if (buyermod)
@@ -205,7 +206,7 @@
         return ProductsInBag;
     }
 
-    public void SaveNewProductData() {
+    public async Task SaveNewProductData() {
         int category_id = 0;
         for(int i = 0; i < categories.Count(); i++) {
             if (newproduct_category == categories[i].Name)
@@ -214,7 +215,7 @@
                 break;
             }
         }
-        PostgresConnection.AddProduct(user.User_id, category_id, newproduct_amount, newproduct_price, newproduct_name, newproduct_description);
+        await PostgresConnection.AddProduct(user.User_id, category_id, newproduct_amount, newproduct_price, newproduct_name, newproduct_description);
     }
 }
 

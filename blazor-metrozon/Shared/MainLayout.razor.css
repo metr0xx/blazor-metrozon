@@ -258,6 +258,10 @@
     flex-direction: row
 }
 
+.products-row {
+    margin-top: 2vh;
+    margin-left: 5vw;
+}
 .card-button {
     width: 3vw;
     height: 6vh;
