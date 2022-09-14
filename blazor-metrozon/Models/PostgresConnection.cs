@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace blazor_metrozon.Models
 {
@@ -58,7 +59,7 @@ namespace blazor_metrozon.Models
             con.Close();
             return categories;
         }
-        public List<int> SyncBag(int product_id, bool NewElem)
+        public async Task<List<int>> SyncBag(int product_id, bool NewElem)
         {
             con.Open();
             NpgsqlCommand SearchProductsByUserId = new NpgsqlCommand($"SELECT * FRPOM users WHERE user_id={user.User_id}", con);
@@ -83,7 +84,7 @@ namespace blazor_metrozon.Models
             }
             return BagData;
         }
-        public static void AddProduct(int seller_id, int category_id, int amount, int price, string title, string description)
+        public static async Task AddProduct(int seller_id, int category_id, int amount, int price, string title, string description)
         {
             con.Open();
             
