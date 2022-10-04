@@ -23,8 +23,8 @@
 }
 
 .menu-col {
-    
 }
+
 .choose-mod-txt {
     font-size: 15pt;
 }
@@ -262,6 +262,7 @@
     margin-top: 2vh;
     margin-left: 5vw;
 }
+
 .card-button {
     width: 3vw;
     height: 6vh;
@@ -285,17 +286,19 @@
     flex-direction: column;
     margin-right: 50%;
 }
+
 .product-row {
     margin-top: 1vh;
     flex-direction: row;
 }
+
 .add-product-btn {
     width: 18vw;
     height: 8vh;
     border-radius: 40px;
     background-color: white;
     border: 2px solid coral;
-    position: absolute;
+    position: fixed;
     bottom: 5%;
     left: 41%;
     font-size: 15pt;
@@ -305,15 +308,15 @@
     background: linear-gradient(90deg, rgba(255, 255, 255, .1), rgba(255, 255, 255, .5));
 }
 
-.add-product-btn:hover {
-    background: #fe6637;
-    color: #fff;
-}
-
-    .add-product-btn:hover:before {
-        left: 150px;
-        transition: .5s ease-in-out;
+    .add-product-btn:hover {
+        background: #fe6637;
+        color: #fff;
     }
+
+        .add-product-btn:hover:before {
+            left: 150px;
+            transition: .5s ease-in-out;
+        }
 
 .add-product-btn-up {
     width: 18vw;
@@ -328,15 +331,16 @@
     font-family: 'Montserrat', sans-serif;
 }
 
-.add-product-btn-up:hover {
-    background: #fe6637;
-    color: #fff;
-}
-
-    .add-product-btn-up:hover:before {
-        left: 150px;
-        transition: .5s ease-in-out;
+    .add-product-btn-up:hover {
+        background: #fe6637;
+        color: #fff;
     }
+
+        .add-product-btn-up:hover:before {
+            left: 150px;
+            transition: .5s ease-in-out;
+        }
+
 .add-product-btn {
     background: linear-gradient(90deg, rgba(255, 255, 255, .1), rgba(255, 255, 255, .5));
 }
@@ -350,7 +354,7 @@
             left: 150px;
             transition: .5s ease-in-out;
         }
-        
+
 @keyframes hide {
     from {
         opacity: 100%;
@@ -365,12 +369,14 @@
     from {
         opacity: 0%;
     }
+
     to {
         opacity: 100%;
     }
 }
+
 .new-product-dialog {
-    position: absolute;
+    position: fixed;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -383,22 +389,26 @@
     top: 50%;
     border-radius: 50px;
 }
+
 .input-line {
     display: flex;
     flex-direction: row;
     margin-top: 3vh;
 }
+
 .input-prod-info {
     width: 20vw;
     margin: 0 auto;
     border-radius: 10px;
     border: 1px solid #ffbc03;
 }
+
 .input-col {
     flex-direction: column;
     display: flex;
     margin-left: 2vw;
 }
+
 .input-hint {
     font-size: 11pt;
     width: 1vw;
