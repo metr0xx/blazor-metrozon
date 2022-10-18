@@ -186,8 +186,7 @@
 
     public void ShowDialog()
     {
-        if (showDialog) showDialog = false;
-        else showDialog = true;
+        showDialog = !showDialog;
     }
 
     public static List<Product> FillUserProducts()
