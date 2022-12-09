@@ -61,6 +61,7 @@ namespace blazor_metrozon.Models
         }
         public async Task<List<int>> SyncBag(int product_id, bool NewElem)
         {
+            #error Ну заканчивай уже, пора синхронить, епта!!!
             con.Open();
             NpgsqlCommand SearchProductsByUserId = new NpgsqlCommand($"SELECT * FRPOM users WHERE user_id={user.User_id}", con);
             NpgsqlDataReader reader = SearchProductsByUserId.ExecuteReader();
@@ -86,6 +87,7 @@ namespace blazor_metrozon.Models
         }
         public static async Task AddProduct(int seller_id, int category_id, int amount, int price, string title, string description)
         {
+            #error Какой асинхрон, ты че, ебанулся?
             con.Open();
             
                 NpgsqlCommand cmd = new NpgsqlCommand($"INSERT INTO product (seller_id, category_id, amount, price, rating, title, description) VALUES ({seller_id}, {category_id}, {amount}, {price}, 4.2, '{title}', '{description}')", con);
