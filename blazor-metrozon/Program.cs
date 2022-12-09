@@ -13,6 +13,7 @@ namespace blazor_metrozon
     {
         public static void Main(string[] args)
         {
+            #error Нахуя тебе функция Main?
             CreateHostBuilder(args).Build().Run();
                      
         }
