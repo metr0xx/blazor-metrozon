@@ -17,14 +17,14 @@
     <div class=@grad_class>
         <div class="mod-menu">
             <div class="menu-col">
-            <div class="seller-mod">
-                <button class="seller-mod-btn" @onclick="changeMod">покупатель</button>
-                <button class="seller-mod-btn" @onclick="changeMod">продавец</button>
-            </div>
-            <div class="row" style="margin-top: 1.5vh; margin-left: 3.5vw">
-                <i class="choose-mod-txt">Выберите режим</i>
-                <img src="images/downarrow.png" style="height: 4vh; width: 3vw; margin-left: 1vw;">
-            </div>
+                <div class="seller-mod">
+                    <button class="seller-mod-btn" @onclick="changeMod">покупатель</button>
+                    <button class="seller-mod-btn" @onclick="changeMod">продавец</button>
+                </div>
+                <div class="row" style="margin-top: 1.5vh; margin-left: 3.5vw">
+                    <i class="choose-mod-txt">Выберите режим</i>
+                    <img src="images/downarrow.png" style="height: 4vh; width: 3vw; margin-left: 1vw;">
+                </div>
             </div>
         </div>
         <div class="topbar">
@@ -35,9 +35,10 @@
             <button class="liked"><span class=d-inline-block style="height: 11px; width: 22px"><i class="gg-heart" style="position: relative; z-index: 1"></i></span>Избранное</button>
         </div>
     </div>
+    
     @if (buyermod)
     {   
-        <div class="row" style="margin-left: 0.5vw; margin-top: 1vh;">
+        <div class="row" style="margin-left: 0.5vw; margin-top: 1vh; height: 100vh">
             @for (int i = 0; i < products.Count; i++)
             {
                 <div class="row" style="margin-left: 1vw; margin-top: 2vh">
@@ -60,6 +61,7 @@
 
                 </div>
             }
+            
         </div>
         <div class=@bag_class>
             <div class="row">
@@ -111,48 +113,50 @@
                         <div class="input-hint">Название товара</div>
                         <input class="input-prod-info" @bind="@newproduct_name" @oninput="@((e) => { try { newproduct_name=(string)e.Value;} catch {}})">
                     </div>
-                     <div class="input-line">
+                    <div class="input-line">
                         <div class="input-hint">Стоимость товара</div>
                         <input class="input-prod-info" @bind="@newproduct_price" @oninput="@((e) => { try {newproduct_price=(int)e.Value;} catch {}})">
 
-                    </div class="input-line">
+                        <div class="input-line"/>
 
-                    <div class="input-line">
-                        <div class="input-hint">Количество (шт)</div>
-                        <input class="input-prod-info" @bind="@newproduct_amount" @oninput="@((e) => { try {newproduct_amount=(int)e.Value;} catch {}})">
+                        <div class="input-line">
+                            <div class="input-hint">Количество (шт)</div>
+                            <input class="input-prod-info" @bind="@newproduct_amount" @oninput="@((e) => { try {newproduct_amount=(int)e.Value;} catch {}})">
+
+                        </div>
+
+                        <div class="input-line">
+                            <div class="input-hint">Категория</div>
+                            <input class="input-prod-info" @bind="@newproduct_category" @oninput="@((e) => { try {newproduct_category=(string)e.Value;} catch {}})">
+
+                        </div>
+
+                        <div class="input-line">
+                            <div class="input-hint">Описание</div>
+                            <textarea class="input-prod-info" @bind="@newproduct_description" @oninput="@((e) => { try {newproduct_description=(string)e.Value;} catch {}})"></textarea>
+
+                        </div>
+
+                        <button class="add-product-btn-up" @onclick="SaveNewProductData">Добавить</button>
 
                     </div>
-
-                    <div class="input-line">
-                        <div class="input-hint">Категория</div>
-                        <input class="input-prod-info" @bind="@newproduct_category" @oninput="@((e) => { try {newproduct_category=(string)e.Value;} catch {}})">
-
-                    </div>
-
-                    <div class="input-line">
-                        <div class="input-hint">Описание</div>
-                        <textarea class="input-prod-info" @bind="@newproduct_description" @oninput="@((e) => { try {newproduct_description=(string)e.Value;} catch {}})"></textarea>
-
-                    </div>
-
-                    <button class="add-product-btn-up" @onclick="SaveNewProductData">Добавить</button>
-
                 </div>
-            </div>
-        }
+                </div>
+                }
     }
 </div>
 
 @code {
-    static User user = new User(1, "Mikle", "Frolov", 1200, "88005553535", "abobz@aboba.com", "12345");
+    static List<Product> products = PostgresConnection.ShowProducts();
+    
 
+    static User user = new User(1, "Mikle", "Frolov", 1200, "88005553535", "abobz@aboba.com", "12345");
     int state = 0;
     bool buyermod = true;
     bool showDialog = false;
     string[] statements = { "bag-animate-left", "bag-animate-right" };
     string bag_class = "bag-no-animate";
     string grad_class = "grad";
-    static List<Product> products = new List<Product>(PostgresConnection.ShowProducts());
     List<Product> UserProducts = new List<Product>(FillUserProducts());
     List<Category> categories = new List<Category>(PostgresConnection.GetCategories());
     string placeholder = "Введите название товара";
@@ -164,7 +168,7 @@
     public void AnimateBag()
     {
         bag_class = statements[state % 2];
-        state += 1;
+        state++;
     }
 
     public void changeMod()
@@ -184,38 +188,41 @@
         }
     }
 
-    public void ShowDialog()
+    private void ShowDialog()
     {
-        showDialog = !showDialog;
+        if (showDialog) showDialog = false;
+        else showDialog = true;
     }
 
-    public static List<Product> FillUserProducts()
+    private static List<Product> FillUserProducts()
     {
         List<Product> userproducts = new List<Product>();
-        for (int i = 0; i < products.Count(); i++)
+        /*for (int i = 0; i < products.Count(); i++)
         {
             if (products[i].Seller_id == user.User_id) userproducts.Add(products[i]);
-        }
+        }*/
         return userproducts;
     }
 
     public List<Product> FillBag()
     {
-        List<Product> ProductsInBag = new List<Product>();
-        return ProductsInBag;
+        List<Product> productsInBag = new List<Product>();
+        return productsInBag;
     }
 
-    public async Task SaveNewProductData() {
-        int category_id = 0;
+    private async Task SaveNewProductData() {
+        int categoryId = 0;
         for(int i = 0; i < categories.Count(); i++) {
             if (newproduct_category == categories[i].Name)
             {
-                category_id = categories[i].Id;
+                categoryId = categories[i].Id;
                 break;
             }
         }
-        await PostgresConnection.AddProduct(user.User_id, category_id, newproduct_amount, newproduct_price, newproduct_name, newproduct_description);
+        await PostgresConnection.AddProduct(user.User_id, categoryId, newproduct_amount, newproduct_price, newproduct_name, newproduct_description);
     }
+
+
 }
 
 
