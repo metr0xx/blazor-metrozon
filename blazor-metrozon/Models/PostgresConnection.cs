@@ -17,8 +17,8 @@ namespace blazor_metrozon.Models
         {
             List<Product> products = new List<Product>();
             con.Open();
-            NpgsqlCommand com = new NpgsqlCommand("SELECT * FROM product", con);
-            NpgsqlDataReader reader = com.ExecuteReader();
+            var com = new NpgsqlCommand("SELECT * FROM product", con);
+            var reader = com.ExecuteReader();
             while (reader.Read())
             {
                 try
@@ -44,8 +44,8 @@ namespace blazor_metrozon.Models
         {
             List<Category> categories = new List<Category>();
             con.Open();
-            NpgsqlCommand com = new NpgsqlCommand("SELECT * FROM categories", con);
-            NpgsqlDataReader reader = com.ExecuteReader();
+            var com = new NpgsqlCommand("SELECT * FROM categories", con);
+            var reader = com.ExecuteReader();
             while (reader.Read())
             {
                 Category category = new Category(
@@ -56,31 +56,54 @@ namespace blazor_metrozon.Models
             con.Close();
             return categories;
         }
-        public async Task<List<int>> SyncBag(int product_id, bool NewElem)
+        public async Task bagAdd(int user_id, int product_id)
         {
             con.Open();
-            NpgsqlCommand SearchProductsByUserId = new NpgsqlCommand($"SELECT * FRPOM users WHERE user_id={user.User_id}", con);
-            NpgsqlDataReader reader = SearchProductsByUserId.ExecuteReader();
-            string UserBagData = "";
-            List<int> BagData = new List<int>();
             try
             {
-                UserBagData = reader.GetString(7);
-
-                for (int i = 0; i < UserBagData.Length; i += 2) BagData.Add(Convert.ToInt32(UserBagData[i]));
-                UserBagData = "";
+                var cmd = new NpgsqlCommand($"UPDATE bag SET amount = amount + 1 WHERE user_id = {user_id}", con);
+                cmd.ExecuteNonQuery();
             }
-            catch { }
-
-            finally
+            catch
             {
-                if (NewElem) BagData.Add(product_id);
-                else BagData.Remove(product_id);
-                for (int i = 0; i < BagData.Count; i++) UserBagData += $"{BagData[i]};";
-                NpgsqlCommand UpdateBag = new NpgsqlCommand($"UPDATE users SET products-in-bag = {UserBagData} " +
-                                                            $"WHERE user_id={user.User_id}", con);
+                var cmd = new NpgsqlCommand(
+                    $"INSERT INTO bag (user_id, in_bag, amount) VALUES ({user_id}, {product_id}, 1)", con);
             }
-            return BagData;
+
+            con.Close();
+        }
+
+        public async Task bagDelete(int user_id, int product_id)
+        {
+            con.Open();
+
+            try
+            {
+                var cmd = new NpgsqlCommand(
+                    $"DELETE FROM bag WHERE user_id = {user_id} AND in_bag = {product_id} AND amount = 0", con);
+                cmd.ExecuteNonQuery();
+            }
+
+            catch
+            {
+                var cmd = new NpgsqlCommand($"UPDATE bag SET amount = amount - 1 WHERE user_id = {user_id} AND in_bag = {product_id}", con);
+                cmd.ExecuteNonQuery();
+            }
+            
+            con.Close();
+        }
+
+        public static async Task<List<int>> GetBagData(int user_id)
+        {
+            List<int> bagData = new List<int>();
+            con.Open();
+            var cmd = new NpgsqlCommand($"SELECT * FROM bag WHERE user_id = {user_id}", con);
+            var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                bagData.Add((reader.GetInt32(1)));
+            }
+            return bagData;
         }
         public static async Task AddProduct(int seller_id, int category_id, int amount, int price, string title, string description)
         {
@@ -91,9 +114,7 @@ namespace blazor_metrozon.Models
                                             $"VALUES ({seller_id}, {category_id}, {amount}, {price}, 4.2, '{title}', '{description}')", con);
 
                 cmd.ExecuteNonQuery();
-            
-            
-            con.Close();
+                con.Close();
         }
 
         public static async Task ChangeProduct(int product_id, int category_id, int amount, int price, string title, string description)
@@ -113,7 +134,7 @@ namespace blazor_metrozon.Models
         {
             con.Open();
             var cmd = new NpgsqlCommand($"DELETE FROM product WHERE product_id = {product_id}", con);
-            cmd.ExecuteNonQuery();
+
             con.Close();
         }
         void SellProduct(int product_id)

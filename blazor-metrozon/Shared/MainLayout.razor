@@ -1,18 +1,12 @@
 ﻿@inherits LayoutComponentBase
 @using Microsoft.AspNetCore.Components;
-@using Npgsql;
-@using System;
-@using System.Collections.Generic;
-@using System.IO;
-@using Microsoft.AspNetCore.Http
-@using Models;
 
-<link href='https://css.gg/search.css' rel='stylesheet'>
-<link href='https://css.gg/menu.css' rel='stylesheet'>
-<link href='https://css.gg/heart.css' rel='stylesheet'>
-<link href='https://css.gg/shopping-cart.css' rel='stylesheet'>
-<link href='https://css.gg/eye.css' rel='stylesheet'>
-<link href='https://css.gg/arrow-bottom-left.css' rel='stylesheet'>
+<link href="https://css.gg/search.css" rel="stylesheet">
+<link href="https://css.gg/menu.css" rel="stylesheet">
+<link href="https://css.gg/heart.css" rel="stylesheet">
+<link href="https://css.gg/shopping-cart.css" rel="stylesheet">
+<link href="https://css.gg/eye.css" rel="stylesheet">
+<link href="https://css.gg/arrow-bottom-left.css" rel="stylesheet">
 
 
 <div class="page">
@@ -30,7 +24,7 @@
             </div>
         </div>
         <div class="topbar">
-            <button class="Metrozon">Metrozon</button>
+            <button @onclick="home" class="Metrozon">Metrozon</button>
             <button class="catalog"><span class="d-inline-block" style="height: 7px; width: 30px"><i class="gg-menu"></i></span>Каталог</button>
             <input class="input" placeholder="@placeholder" />
             <button class="search"><span class="d-inline-block"><i class="gg-search" style="width: 17px; height: 17px;"></i></span></button>
@@ -41,20 +35,19 @@
     @if (buyermod)
     {   
         <div class="row" style="margin-left: 0.5vw; margin-top: 1vh; height: 100vh">
-            @for (int i = 0; i < products.Count; i++)
+            @foreach (var product in products)
             {
                 <div class="row" style="margin-left: 1vw; margin-top: 2vh">
                     <button class="card">
                         <div class="container">
 
                             <p><img src="images/noph.png" width="270" height="220"></p>
-                            <h5><b>@formatString(products[i].Title)</b></h5>
-                            <h5><b>@products[i].Price ₽</b></h5>
-                            <h6>Осталось @products[i].Amount шт.</h6>
+                            <h5><b>@formatString(product.Title)</b></h5>
+                            <h5><b>@product.Price ₽</b></h5>
+                            <h6>Осталось @product.Amount шт.</h6>
 
                         </div>
                     </button>
-
                     <div class="card-button-col">
                         <button class="card-button" title="Добавить в избранное"><span class=d-inline-block><i class="gg-heart"></i></span></button>
                         <button class="card-button" title="Добавить в корзину"><span class=d-inline-block><i class="gg-shopping-cart"></i></span></button>
@@ -75,7 +68,16 @@
                         </div>
                     </div>
                 </button>
-                <div class="bag-inside"></div>
+                <div class="bag-inside">
+                    @*@for (int i = 0, j = 0; i < products.Count(); i++)
+                     {
+                         if (products[i].Product_id == productsInBag[j])
+                         {
+                             <div></div>
+                             j++;
+                         }
+                    }*@
+                </div>
             </div>
         </div>
     }
@@ -154,11 +156,13 @@
     static User user = new User(1, "Mikle", "Frolov", 1200, "88005553535", "abobz@aboba.com", "12345");
     int state = 0;
     bool buyermod = true;
+    bool showCategories = false;
     bool showDialog = false;
     string[] statements = { "bag-animate-left", "bag-animate-right" };
     string bag_class = "bag-no-animate";
     string grad_class = "grad";
     List<Product> userProducts = new List<Product>(fillUserProducts());
+    List<int> productsInBag = new List<int>();
     List<Category> categories = new List<Category>(PostgresConnection.GetCategories());
     string placeholder = "Введите название товара";
     string newproduct_name;
@@ -169,7 +173,16 @@
     int newProductId;
     string newProductButtonTitle = "";
 
-    public void animateBag()
+    private void home()
+    {
+        buyermod = true;
+    }
+
+    private void toggleShowCategories()
+    {
+        showCategories = !showCategories;
+    }
+    private void animateBag()
     {
         bag_class = statements[state++ % 2];
     }
@@ -216,11 +229,9 @@
         return userProducts;
     }
     
-    private List<Product> fillBag()
+    private async Task fillBag()
     {
-        List<Product> productsInBag = new List<Product>();
-        // bag filling
-        return productsInBag;
+        productsInBag = await PostgresConnection.GetBagData(user.User_id);
     }
 
     private async Task saveNewProductData(bool changed, int product_id = 0)
@@ -259,11 +270,12 @@
 
     private async Task deleteProduct(int product_id)
     {
+        // warning dialog
         await PostgresConnection.DeleteProduct(product_id);
         products = PostgresConnection.ShowProducts();
         userProducts = fillUserProducts();
     }
-
+    
     public string formatString(string str)
     {
         if (str.Length > 20)
