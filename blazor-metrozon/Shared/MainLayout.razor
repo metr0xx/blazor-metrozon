@@ -98,7 +98,7 @@
                         <img src="images/noph.png" width="100" height="80">
                         @product.Title, @product.Price ₽ (@product.Amount Шт.) @product.Description
                         <button @onclick="@(e => toggleShowDialog(true, product.Product_id))">Изменить</button>
-                        <button>X</button>
+                        <button @onclick="@(e => deleteProduct(product.Product_id))">X</button>
                     </div>
                 </div>
             }
@@ -257,8 +257,11 @@
         newproduct_description = "";
     }
 
-    private async Task updateProductData()
+    private async Task deleteProduct(int product_id)
     {
+        await PostgresConnection.DeleteProduct(product_id);
+        products = PostgresConnection.ShowProducts();
+        userProducts = fillUserProducts();
     }
 
     public string formatString(string str)

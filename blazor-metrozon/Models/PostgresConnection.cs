@@ -77,7 +77,8 @@ namespace blazor_metrozon.Models
                 if (NewElem) BagData.Add(product_id);
                 else BagData.Remove(product_id);
                 for (int i = 0; i < BagData.Count; i++) UserBagData += $"{BagData[i]};";
-                NpgsqlCommand UpdateBag = new NpgsqlCommand($"UPDATE users SET products-in-bag = {UserBagData} WHERE user_id={user.User_id}", con);
+                NpgsqlCommand UpdateBag = new NpgsqlCommand($"UPDATE users SET products-in-bag = {UserBagData} " +
+                                                            $"WHERE user_id={user.User_id}", con);
             }
             return BagData;
         }
@@ -85,7 +86,9 @@ namespace blazor_metrozon.Models
         {
             con.Open();
             
-                var cmd = new NpgsqlCommand($"INSERT INTO product (seller_id, category_id, amount, price, rating, title, description) VALUES ({seller_id}, {category_id}, {amount}, {price}, 4.2, '{title}', '{description}')", con);
+                var cmd = new NpgsqlCommand($"INSERT INTO product (" +
+                                            $"seller_id, category_id, amount, price, rating, title, description) " +
+                                            $"VALUES ({seller_id}, {category_id}, {amount}, {price}, 4.2, '{title}', '{description}')", con);
 
                 cmd.ExecuteNonQuery();
             
@@ -106,9 +109,12 @@ namespace blazor_metrozon.Models
             cmd.ExecuteNonQuery();
             con.Close();
         }
-        void DeleteProduct(int product_id)
+        public static async Task DeleteProduct(int product_id)
         {
-
+            con.Open();
+            var cmd = new NpgsqlCommand($"DELETE FROM product WHERE product_id = {product_id}", con);
+            cmd.ExecuteNonQuery();
+            con.Close();
         }
         void SellProduct(int product_id)
         {
