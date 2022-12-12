@@ -85,7 +85,7 @@ namespace blazor_metrozon.Models
         {
             con.Open();
             
-                NpgsqlCommand cmd = new NpgsqlCommand($"INSERT INTO product (seller_id, category_id, amount, price, rating, title, description) VALUES ({seller_id}, {category_id}, {amount}, {price}, 4.2, '{title}', '{description}')", con);
+                var cmd = new NpgsqlCommand($"INSERT INTO product (seller_id, category_id, amount, price, rating, title, description) VALUES ({seller_id}, {category_id}, {amount}, {price}, 4.2, '{title}', '{description}')", con);
 
                 cmd.ExecuteNonQuery();
             
@@ -93,6 +93,19 @@ namespace blazor_metrozon.Models
             con.Close();
         }
 
+        public static async Task ChangeProduct(int product_id, int category_id, int amount, int price, string title, string description)
+        {
+            con.Open();
+            
+            var cmd = new NpgsqlCommand("UPDATE product SET " +
+                                        $"category_id = {category_id}, " +
+                                        $"amount = {amount}, " +
+                                        $"price = {price}, " +
+                                        $"title = '{title}', " +
+                                        $"description = '{description}' " + $"WHERE product_id = {product_id}", con);
+            cmd.ExecuteNonQuery();
+            con.Close();
+        }
         void DeleteProduct(int product_id)
         {
 
