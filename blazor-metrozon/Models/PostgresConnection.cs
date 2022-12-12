@@ -8,9 +8,10 @@ namespace blazor_metrozon.Models
 {
     public class PostgresConnection
     {
-        User user = new User(1, "Mikle", "Frolov", 1200, "88005553535", "abobz@aboba.com", "12345");
-        static StreamReader rd = new StreamReader("C:/data/string.txt");
-        static string con_str = rd.ReadLine();
+        User user = new User(1, "Mikle", "Dorofey", 1000000, "849712", "aboba@edu.mirea.ru", "1234");
+        /*static StreamReader rd = new StreamReader("C:/data/string.txt");*/
+
+        private static string con_str = "host=localhost;Port=5432;Username=postgres;Password=Athhfhb5558;Database=metrozon-db;";
         static NpgsqlConnection con = new NpgsqlConnection(con_str);
         public static List<Product> ShowProducts()
         {
@@ -47,14 +48,10 @@ namespace blazor_metrozon.Models
             NpgsqlDataReader reader = com.ExecuteReader();
             while (reader.Read())
             {
-                
-                
-                    Category category = new Category(
+                Category category = new Category(
                         reader.GetInt32(0),
                         reader.GetString(1));
                     categories.Add(category);
-                
-                
             }
             con.Close();
             return categories;

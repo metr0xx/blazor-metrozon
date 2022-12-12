@@ -4,6 +4,7 @@
 @using System;
 @using System.Collections.Generic;
 @using System.IO;
+@using Microsoft.AspNetCore.Http
 @using Models;
 
 <link href='https://css.gg/search.css' rel='stylesheet'>
@@ -80,7 +81,7 @@
     }
     else
     {
-        if (UserProducts.Count() == 0)
+        if (userProducts.Count() == 0)
         {
             <div>
                 У вас пока нет размещенных товаров.
@@ -90,10 +91,9 @@
         else
         {
             <h2 class="seller-mod-header">Ваши товары</h2>
-            foreach (var product in UserProducts)
+            foreach (var product in userProducts)
             {
                 <div class="product-list">
-
                     <div class="product-row">
                         <img src="images/noph.png" width="100" height="80">
                         @product.Title, @product.Price ₽ (@product.Amount Шт.) @product.Description
@@ -102,7 +102,7 @@
                     </div>
                 </div>
             }
-            <button class="add-product-btn" @onclick="ShowDialog">Добавить новый товар</button>
+            <button class="add-product-btn" @onclick="toggleShowDialog">Добавить новый товар</button>
         }
         if (showDialog)
         {  
@@ -159,7 +159,7 @@
     string[] statements = { "bag-animate-left", "bag-animate-right" };
     string bag_class = "bag-no-animate";
     string grad_class = "grad";
-    List<Product> UserProducts = new List<Product>(FillUserProducts());
+    List<Product> userProducts = new List<Product>(fillUserProducts());
     List<Category> categories = new List<Category>(PostgresConnection.GetCategories());
     string placeholder = "Введите название товара";
     string newproduct_name;
@@ -190,23 +190,25 @@
         }
     }
 
-    private void ShowDialog()
+    private void toggleShowDialog()
     {
-        if (showDialog) showDialog = false;
-        else showDialog = true;
+        showDialog = !showDialog;
     }
 
-    private static List<Product> FillUserProducts()
+    private static List<Product> fillUserProducts()
     {
         List<Product> userProducts = new List<Product>();
-        for (int i = 0; i < products.Count(); i++)
+        foreach (var product in products)
         {
-            if (products[i].Seller_id == user.User_id) userProducts.Add(products[i]);
+            if (product.Seller_id == user.User_id)
+            {
+                userProducts.Add(product);
+            }
         }
         return userProducts;
     }
     
-    private List<Product> FillBag()
+    private List<Product> fillBag()
     {
         List<Product> productsInBag = new List<Product>();
         // bag filling
@@ -223,6 +225,13 @@
             newproduct_price,
             newproduct_name,
             newproduct_description);
+        products = PostgresConnection.ShowProducts();
+        userProducts.Add(products[products.Count - 1]);
+        categoryId = 0;
+        newproduct_amount = 0;
+        newproduct_price = 0;
+        newproduct_name = "";
+        newproduct_description = "";
     }
 
     public string formatString(string str)

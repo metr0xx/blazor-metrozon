@@ -282,7 +282,6 @@
 .product-list {
     margin-top: 2vh;
     flex-direction: column;
-    margin-right: 50%;
 }
 
 .product-row {
