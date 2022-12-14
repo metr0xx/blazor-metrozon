@@ -51,21 +51,20 @@ namespace blazor_metrozon.Models
             con.Close();
             return categories;
         }
-        public static async Task BagAdd(int user_id, int product_id)
+        public static async Task BagAdd(int user_id, int product_id, bool alreadyHasPr)
         {
             con.Open();
-            
-            try
+            NpgsqlCommand cmd;
+            if (alreadyHasPr)
             {
-                var cmd = new NpgsqlCommand($"UPDATE bag SET amount = amount + 1 WHERE user_id = {user_id} AND in_bag = {product_id}", con);
+                cmd = new NpgsqlCommand(
+                    $"UPDATE bag SET amount = amount + 1 WHERE user_id = {user_id} AND in_bag = {product_id}", con);
                 cmd.ExecuteNonQuery();
             }
-            catch
+            else
             {
-                var cmd = new NpgsqlCommand(
+                cmd = new NpgsqlCommand(
                     $"INSERT INTO bag (user_id, in_bag, amount) VALUES ({user_id}, {product_id}, 1)", con);
-                                    // delete item from product table
-
                 cmd.ExecuteNonQuery();
             }
 

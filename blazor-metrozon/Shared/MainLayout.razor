@@ -1,7 +1,7 @@
 ﻿@inherits LayoutComponentBase
 @using Microsoft.AspNetCore.Components;
 @using System.Linq;
-@using System.Collections.Generic;
+
 <link href="https://css.gg/search.css" rel="stylesheet">
 <link href="https://css.gg/menu.css" rel="stylesheet">
 <link href="https://css.gg/heart.css" rel="stylesheet">
@@ -74,14 +74,8 @@
                     
                     @foreach (var prBag in productsInBag)
                     {
-                        foreach (var pr in products)
-                        {
-                            if (prBag.In_bag == pr.Product_id)
-                            {
-                                <div>@pr.Title @prBag.Amount</div>
-                                break;
-                            }
-                        }
+                        var pr = products.Find(e => (e.Product_id == prBag.In_bag));
+                        <div>@pr.Title @prBag.Amount</div>
                     }
                 </div>
             </div>
@@ -245,7 +239,9 @@
 
     private async Task bagAddProduct(int product_id)
     {
-        await PostgresConnection.BagAdd(user.User_id, product_id);
+        var alreadyHasPr = productsInBag.Exists(e => (e.In_bag == product_id));
+
+        await PostgresConnection.BagAdd(user.User_id, product_id, alreadyHasPr);
         fillBag();
     }
 
@@ -278,7 +274,7 @@
                 newproduct_name,
                 newproduct_description);
             products = PostgresConnection.ShowProducts();
-            userProducts.Add(products[products.Count - 1]);
+            userProducts.Add(products[products.Count() - 1]);
         }
         categoryId = 0;
         newproduct_amount = 0;
