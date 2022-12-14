@@ -1,6 +1,7 @@
 ﻿@inherits LayoutComponentBase
 @using Microsoft.AspNetCore.Components;
-
+@using System.Linq;
+@using System.Collections.Generic;
 <link href="https://css.gg/search.css" rel="stylesheet">
 <link href="https://css.gg/menu.css" rel="stylesheet">
 <link href="https://css.gg/heart.css" rel="stylesheet">
@@ -50,7 +51,7 @@
                     </button>
                     <div class="card-button-col">
                         <button class="card-button" title="Добавить в избранное"><span class=d-inline-block><i class="gg-heart"></i></span></button>
-                        <button class="card-button" title="Добавить в корзину"><span class=d-inline-block><i class="gg-shopping-cart"></i></span></button>
+                        <button @onclick="@(e=> bagAddProduct (product.Product_id))" class="card-button" title="Добавить в корзину"><span class=d-inline-block><i class="gg-shopping-cart"></i></span></button>
                         <button class="card-button" title="Посмотреть похожее"><span class=d-inline-block><i class="gg-eye"></i></span></button>
                     </div>
 
@@ -69,21 +70,26 @@
                     </div>
                 </button>
                 <div class="bag-inside">
-                    @*@for (int i = 0, j = 0; i < products.Count(); i++)
-                     {
-                         if (products[i].Product_id == productsInBag[j])
-                         {
-                             <div></div>
-                             j++;
-                         }
-                    }*@
+                    
+                    
+                    @foreach (var prBag in productsInBag)
+                    {
+                        foreach (var pr in products)
+                        {
+                            if (prBag.In_bag == pr.Product_id)
+                            {
+                                <div>@pr.Title @prBag.Amount</div>
+                                break;
+                            }
+                        }
+                    }
                 </div>
             </div>
         </div>
     }
     else
     {
-        if (userProducts.Count() == 0)
+        if (!userProducts.Any())
         {
             <div>
                 У вас пока нет размещенных товаров.
@@ -162,7 +168,7 @@
     string bag_class = "bag-no-animate";
     string grad_class = "grad";
     List<Product> userProducts = new List<Product>(fillUserProducts());
-    List<int> productsInBag = new List<int>();
+    List<Bag> productsInBag = new List<Bag>();
     List<Category> categories = new List<Category>(PostgresConnection.GetCategories());
     string placeholder = "Введите название товара";
     string newproduct_name;
@@ -182,9 +188,12 @@
     {
         showCategories = !showCategories;
     }
-    private void animateBag()
+    private async Task animateBag()
     {
         bag_class = statements[state++ % 2];
+        //await fillBag();
+        productsInBag = await PostgresConnection.GetBagData(user.User_id);
+
     }
 
     private void changeMod()
@@ -234,7 +243,17 @@
         productsInBag = await PostgresConnection.GetBagData(user.User_id);
     }
 
-    private async Task saveNewProductData(bool changed, int product_id = 0)
+    private async Task bagAddProduct(int product_id)
+    {
+        await PostgresConnection.BagAdd(user.User_id, product_id);
+        fillBag();
+    }
+
+    private async Task bagDeleteProduct()
+    {
+        // delete from bag
+    }
+    private async Task saveNewProductData(bool changed)
     {   
         showDialog = false;
         if (changed)

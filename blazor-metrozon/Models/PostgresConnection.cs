@@ -1,21 +1,16 @@
 ﻿using Npgsql;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace blazor_metrozon.Models
 {
-    public class PostgresConnection
+    public static class PostgresConnection
     {
-        User user = new User(1, "Mikle", "Dorofey", 1000000, "849712", "aboba@edu.mirea.ru", "1234");
-        /*static StreamReader rd = new StreamReader("C:/data/string.txt");*/
-
         private static string con_str = "host=localhost;Port=5432;Username=postgres;Password=Athhfhb5558;Database=metrozon-db;";
         static NpgsqlConnection con = new NpgsqlConnection(con_str);
         public static List<Product> ShowProducts()
         {
-            List<Product> products = new List<Product>();
+            var products = new List<Product>();
             con.Open();
             var com = new NpgsqlCommand("SELECT * FROM product", con);
             var reader = com.ExecuteReader();
@@ -23,7 +18,7 @@ namespace blazor_metrozon.Models
             {
                 try
                 {
-                    Product product = new Product(
+                    var product = new Product(
                         reader.GetInt32(0),
                         reader.GetInt32(1),
                         reader.GetInt32(2),
@@ -42,13 +37,13 @@ namespace blazor_metrozon.Models
 
         public static List<Category> GetCategories()
         {
-            List<Category> categories = new List<Category>();
+            var categories = new List<Category>();
             con.Open();
             var com = new NpgsqlCommand("SELECT * FROM categories", con);
             var reader = com.ExecuteReader();
             while (reader.Read())
             {
-                Category category = new Category(
+                var category = new Category(
                         reader.GetInt32(0),
                         reader.GetString(1));
                     categories.Add(category);
@@ -56,24 +51,28 @@ namespace blazor_metrozon.Models
             con.Close();
             return categories;
         }
-        public async Task bagAdd(int user_id, int product_id)
+        public static async Task BagAdd(int user_id, int product_id)
         {
             con.Open();
+            
             try
             {
-                var cmd = new NpgsqlCommand($"UPDATE bag SET amount = amount + 1 WHERE user_id = {user_id}", con);
+                var cmd = new NpgsqlCommand($"UPDATE bag SET amount = amount + 1 WHERE user_id = {user_id} AND in_bag = {product_id}", con);
                 cmd.ExecuteNonQuery();
             }
             catch
             {
                 var cmd = new NpgsqlCommand(
                     $"INSERT INTO bag (user_id, in_bag, amount) VALUES ({user_id}, {product_id}, 1)", con);
+                                    // delete item from product table
+
+                cmd.ExecuteNonQuery();
             }
 
             con.Close();
         }
 
-        public async Task bagDelete(int user_id, int product_id)
+        public static async Task BagDelete(int user_id, int product_id)
         {
             con.Open();
 
@@ -93,16 +92,20 @@ namespace blazor_metrozon.Models
             con.Close();
         }
 
-        public static async Task<List<int>> GetBagData(int user_id)
+        public static async Task<List<Bag>> GetBagData(int user_id)
         {
-            List<int> bagData = new List<int>();
+            var bagData = new List<Bag>();
             con.Open();
             var cmd = new NpgsqlCommand($"SELECT * FROM bag WHERE user_id = {user_id}", con);
             var reader = cmd.ExecuteReader();
+            
             while (reader.Read())
             {
-                bagData.Add((reader.GetInt32(1)));
+                var userBag = new Bag(
+                reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2));
+                bagData.Add(userBag);
             }
+            con.Close();
             return bagData;
         }
         public static async Task AddProduct(int seller_id, int category_id, int amount, int price, string title, string description)
@@ -137,7 +140,7 @@ namespace blazor_metrozon.Models
 
             con.Close();
         }
-        void SellProduct(int product_id)
+        static async Task SellProduct(int product_id)
         {
 
         }
