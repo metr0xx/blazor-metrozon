@@ -12,14 +12,14 @@
 
 .grad {
     background-image: linear-gradient(45deg, #f5b690 0.1%, #ffe0cf, #ede1da);
-    height: 40%;
+    height: 60rem;
     display: flex;
     transition: 1s;
 }
 
 .grad-sell-mod {
     background-image: linear-gradient(45deg, #f5b690 0.1%, #ffe0cf, #ede1da);
-    height: 20%;
+    height: 40%;
     transition: 1s;
     display: flex;
 }
@@ -57,6 +57,7 @@
     width: 22vw;
     border-end-start-radius: 55px;
     border-end-end-radius: 55px;
+    z-index: 2;
 }
 
 .mod-menu-down {
@@ -67,6 +68,7 @@
     width: 22vw;
     border-end-start-radius: 55px;
     border-end-end-radius: 55px;
+    z-index: 2;
 }
 
 .seller-mod-btn {
@@ -161,6 +163,7 @@
     border-end-start-radius: 37px;
     transition: 0.5s;
     margin-top: 76%;
+    
 }
 
     .bag:hover {
@@ -175,9 +178,9 @@
 
 .bag-inside {
     transition: 0.4s;
-    background-color: orange;
+    background-color: #f0eeeb;
     margin-left: -.36em;
-    width: 29.6vw;
+    width: 35vw;
     height: 100vh;
 }
 
@@ -186,7 +189,7 @@
     position: fixed;
     z-index: 2;
     display: inline-block;
-    right: -29%;
+    right: -34%;
 }
 
 .bag-animate-left {
@@ -202,7 +205,7 @@
     animation: slideRight 1s;
     position: fixed;
     z-index: 2;
-    right: -29%;
+    right: -34%;
 }
 
 @keyframes slideRight {
@@ -211,14 +214,14 @@
     }
 
     to {
-        right: -29%;
+        right: -34%;
     }
 }
 
 @keyframes slideLeft {
 
     from {
-        right: -29%;
+        right: -35%;
     }
 
     to {
@@ -241,6 +244,7 @@
     height: 21rem;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.4s;
+    z-index: 1;
 }
 
     .card:hover {
@@ -257,7 +261,7 @@
 }
 
 .products-row {
-    margin-top: 2vh;
+    margin-top: 2bvh;
     margin-left: 5vw;
 }
 
@@ -371,6 +375,53 @@
     to {
         opacity: 100%;
     }
+}
+
+.bag-item {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid #ffaf40;
+    background-color: white;
+    border-radius: 30px;
+    width: 30vw;
+    height: 10vh;
+    
+}
+
+.bag-row {
+    display: flex;
+    flex-direction: row;
+    margin-left: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.amount-changing {
+    display: flex;
+    flex-direction: column;
+    height: 10vh;
+}
+
+.change-btn {
+    height: 3vh;
+}
+
+.bag-input {
+    width: 2vw;
+    height: 6vh;
+    margin-left: 5px;
+}
+
+.delete {
+    display: flex;
+    margin-top: auto;
+    margin-bottom: auto;
+    right: 0;
+    height: 5vh;
+    width: 2vw;
 }
 
 .new-product-dialog {

@@ -35,7 +35,7 @@
     
     @if (buyermod)
     {   
-        <div class="row" style="margin-left: 0.5vw; margin-top: 1vh; height: 100vh">
+        <div class="row" style="margin-left: 0.5vw; margin-top: 1vh; height: 80vh">
             @foreach (var product in products)
             {
                 <div class="row" style="margin-left: 1vw; margin-top: 2vh">
@@ -70,12 +70,27 @@
                     </div>
                 </button>
                 <div class="bag-inside">
-                    
-                    
+                    <h3>Корзина</h3>
                     @foreach (var prBag in productsInBag)
                     {
                         var pr = products.Find(e => (e.Product_id == prBag.In_bag));
-                        <div>@pr.Title @prBag.Amount</div>
+                        <div class="bag-item">
+                            <div class="bag-row">
+                                <div class="bag-col">
+                                    <div>@pr.Title</div>
+                                    <div class="row">
+                                        <div>@prBag.Amount</div>
+                                        <input class="bag-input">
+                                        <div class="amount-changing">
+                                            <button class="change-btn">+</button>
+                                            <button class="change-btn">-</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="delete">X</button>
+                            </div>
+
+                        </div>
                     }
                 </div>
             </div>
