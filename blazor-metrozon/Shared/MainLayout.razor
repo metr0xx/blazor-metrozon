@@ -89,12 +89,42 @@
             <button class="add-product-btn" @onclick="@(e => toggleShowDialog(false))">Добавить новый товар</button>
         }
         if (showDialog)
-        { 
-            @*всв*@
-               
-                }
+        {
+             <div class="new-product-dialog">
+                
+                <div class="input-col">
+                    <div class="input-line">
+                        <div class="input-hint">Название товара</div>
+                        <input class="input-prod-info" @bind="@newProduct.Title" @oninput="@((e) => { try { newProduct.Title=(string)e.Value;} catch {}})">
+                    </div>
+                    <div class="input-line">
+                        <div class="input-hint">Стоимость товара</div>
+                        <input class="input-prod-info" @bind="@newProduct.Price" @oninput="@((e) => { try {newProduct.Price=(int)e.Value;} catch {}})">
+                    </div>
+                    <div class="input-line">
+                            <div class="input-hint">Количество (шт)</div>
+                            <input class="input-prod-info" @bind="@newProduct.Amount" @oninput="@((e) => { try {newProduct.Amount=(int)e.Value;} catch {}})">
+                        </div>
+                        <div class="input-line">
+                            <div class="input-hint">Категория</div>
+                            <select @bind="@newProduct.Category_id" class="categoryList">
+                                @foreach (var category in categories)
+                                {
+                                    <option value="@category.Id" class="">@category.Name</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="input-line">
+                            <div class="input-hint">Описание</div>
+                            <textarea class="input-prod-info" @bind="@newProduct.Description" @oninput="@((e) => { try {newProduct.Description=(string)e.Value;} catch {}})"></textarea>
+                        </div>
+                        <button class="add-product-btn-up" @onclick="@(e => saveNewProductData(newProductButtonTitle == "Изменить"))">@newProductButtonTitle</button>
+                    </div>
+                </div>
+        }
     }
 </div>
+
 
 @code {
     bool buyermod = true;
@@ -118,8 +148,6 @@
     {
         showCategories = !showCategories;
     }
-    
-    
 
     private void changeMod()
     {
