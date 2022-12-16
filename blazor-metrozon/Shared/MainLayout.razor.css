@@ -177,6 +177,9 @@
 }
 
 .bag-inside {
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
     transition: 0.4s;
     background-color: #f0eeeb;
     margin-left: -.36em;
@@ -261,7 +264,7 @@
 }
 
 .products-row {
-    margin-top: 2bvh;
+    margin-top: 2vh;
     margin-left: 5vw;
 }
 
@@ -379,7 +382,7 @@
 
 .bag-item {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
@@ -387,43 +390,63 @@
     background-color: white;
     border-radius: 30px;
     width: 30vw;
-    height: 10vh;
+    height: 12vh;
     
 }
 
 .bag-row {
     display: flex;
     flex-direction: row;
-    margin-left: 10px;
-    margin-top: auto;
+    margin-top: 5px;
     margin-bottom: auto;
 }
 
+.bag-title {
+    font-size: 15pt;
+    margin-top: 5px;
+}
+
+.bag-header {
+    font-size: 18pt;
+    margin: 10px auto auto;
+}
+
+.bag-col {
+    margin-left: 15px;
+    width: 22rem;
+}
 .amount-changing {
     display: flex;
     flex-direction: column;
     height: 10vh;
 }
 
+
 .change-btn {
+    display: flex;
+    position: relative;
     height: 3vh;
 }
 
 .bag-input {
-    width: 2vw;
-    height: 6vh;
-    margin-left: 5px;
+    width: 4rem;
+    height: 3vh;
+    margin-left: 8px;
 }
 
 .delete {
     display: flex;
+    position: static;
     margin-top: auto;
     margin-bottom: auto;
-    right: 0;
-    height: 5vh;
-    width: 2vw;
+    right: 40px;
+    height: 3rem;
+    width: 3rem;
 }
 
+.btn-center {
+    margin: auto;
+}
 .new-product-dialog {
     position: fixed;
     display: flex;

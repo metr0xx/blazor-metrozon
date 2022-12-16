@@ -11,7 +11,7 @@
 
 
 <div class="page">
-    <div class=@grad_class>
+    <div class="@grad_class">
         <div class="mod-menu">
             <div class="menu-col">
                 <div class="seller-mod">
@@ -70,25 +70,23 @@
                     </div>
                 </button>
                 <div class="bag-inside">
-                    <h3>Корзина</h3>
+                    <div class="bag-header">Корзина</div>
                     @foreach (var prBag in productsInBag)
                     {
                         var pr = products.Find(e => (e.Product_id == prBag.In_bag));
                         <div class="bag-item">
-                            <div class="bag-row">
+                            
                                 <div class="bag-col">
-                                    <div>@pr.Title</div>
-                                    <div class="row">
-                                        <div>Количество: @prBag.Amount</div>
-                                        <input class="bag-input">
-                                        <div class="amount-changing">
-                                            <button class="change-btn">+</button>
-                                            <button class="change-btn">-</button>
-                                        </div>
+                                    <div class="bag-title">@pr.Title</div>
+                                    <div class="bag-row">
+                                        <div>Количество:</div>
+                                        <input class="bag-input" value="@prBag.Amount">
+                                        <button class="change-btn"><div class="btn-center">+</div></button>
+                                        <button class="change-btn"><div class="btn-center">-</div></button>
                                     </div>
                                 </div>
-                                <button class="delete"><div class="d-inline-block">X</div></button>
-                            </div>
+                                <button class="delete"><div class="btn-center">X</div></button>
+                            
 
                         </div>
                     }
@@ -102,7 +100,6 @@
         {
             <div>
                 У вас пока нет размещенных товаров.
-                Нажмите<button>здесь</button>, чтобы разместить товар
             </div>
         }
         else
@@ -193,6 +190,7 @@
     {
         showCategories = !showCategories;
     }
+    
     private async Task animateBag()
     {
         bag_class = statements[state++ % 2];
