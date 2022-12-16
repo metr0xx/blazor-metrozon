@@ -1,6 +1,9 @@
 ﻿@inherits LayoutComponentBase
+@using blazor_metrozon.Components
 @using Microsoft.AspNetCore.Components;
 @using System.Linq;
+@using blazor_metrozon.ComponentsLogic
+@using blazor_metrozon.Models
 
 <link href="https://css.gg/search.css" rel="stylesheet">
 <link href="https://css.gg/menu.css" rel="stylesheet">
@@ -59,40 +62,7 @@
             }
             
         </div>
-        <div class=@bag_class>
-            <div class="row">
-                <button class="bag" @onclick="animateBag">
-                    <div class="d-inline-block">
-                        <div class="row" style="right: 50%">
-                            <img src="images/leftarrow.png" style="height: 4vh; width: 2vw">
-                            <img src="images/shopping-basket.png" style="height: 4vh; width: 2vw">
-                        </div>
-                    </div>
-                </button>
-                <div class="bag-inside">
-                    <div class="bag-header">Корзина</div>
-                    @foreach (var prBag in productsInBag)
-                    {
-                        var pr = products.Find(e => (e.Product_id == prBag.In_bag));
-                        <div class="bag-item">
-                            
-                                <div class="bag-col">
-                                    <div class="bag-title">@pr.Title</div>
-                                    <div class="bag-row">
-                                        <div>Количество:</div>
-                                        <input class="bag-input" value="@prBag.Amount">
-                                        <button class="change-btn"><div class="btn-center">+</div></button>
-                                        <button class="change-btn"><div class="btn-center">-</div></button>
-                                    </div>
-                                </div>
-                                <button class="delete"><div class="btn-center">X</div></button>
-                            
-
-                        </div>
-                    }
-                </div>
-            </div>
-        </div>
+        <BagMenu/>
     }
     else
     {
@@ -119,62 +89,20 @@
             <button class="add-product-btn" @onclick="@(e => toggleShowDialog(false))">Добавить новый товар</button>
         }
         if (showDialog)
-        {  
-            <div class="new-product-dialog">
-                
-                <div class="input-col">
-                    <div class="input-line">
-                        <div class="input-hint">Название товара</div>
-                        <input class="input-prod-info" @bind="@newProduct.Title" @oninput="@((e) => { try { newProduct.Title=(string)e.Value;} catch {}})">
-                    </div>
-                    <div class="input-line">
-                        <div class="input-hint">Стоимость товара</div>
-                        <input class="input-prod-info" @bind="@newProduct.Price" @oninput="@((e) => { try {newProduct.Price=(int)e.Value;} catch {}})">
-                    </div>
-                    <div class="input-line">
-                            <div class="input-hint">Количество (шт)</div>
-                            <input class="input-prod-info" @bind="@newProduct.Amount" @oninput="@((e) => { try {newProduct.Amount=(int)e.Value;} catch {}})">
-
-                        </div>
-
-                        <div class="input-line">
-                            <div class="input-hint">Категория</div>
-                            <select @bind="@newProduct.Category_id" class="categoryList">
-                                @foreach (var category in categories)
-                                {
-                                    <option value="@category.Id" class="">@category.Name</option>
-                                }
-                            </select>
-
-                        </div>
-
-                        <div class="input-line">
-                            <div class="input-hint">Описание</div>
-                            <textarea class="input-prod-info" @bind="@newProduct.Description" @oninput="@((e) => { try {newProduct.Description=(string)e.Value;} catch {}})"></textarea>
-
-                        </div>
-
-                        <button class="add-product-btn-up" @onclick="@(e => saveNewProductData(newProductButtonTitle == "Изменить"))">@newProductButtonTitle</button>
-
-                    </div>
-                </div>
+        { 
+            @*всв*@
                
                 }
     }
 </div>
 
 @code {
-    static List<Product> products = PostgresConnection.ShowProducts();
-    static User user = new User(1, "Mikle", "Frolov", 1200, "88005553535", "abobz@aboba.com", "12345");
-    int state = 0;
     bool buyermod = true;
     bool showCategories = false;
     bool showDialog = false;
-    string[] statements = { "bag-animate-left", "bag-animate-right" };
-    string bag_class = "bag-no-animate";
+    static List<Product> products = Cart.products;
     string grad_class = "grad";
     List<Product> userProducts = new List<Product>(fillUserProducts());
-    List<Bag> productsInBag = new List<Bag>();
     List<Category> categories = new List<Category>(PostgresConnection.GetCategories());
     string placeholder = "Введите название товара";
     Product newProduct = new Product(0, 0, 0, 0, 0, 0.0, "", "");
@@ -191,13 +119,7 @@
         showCategories = !showCategories;
     }
     
-    private async Task animateBag()
-    {
-        bag_class = statements[state++ % 2];
-        //await fillBag();
-        productsInBag = await PostgresConnection.GetBagData(user.User_id);
-
-    }
+    
 
     private void changeMod()
     {
@@ -210,7 +132,7 @@
         else
         {
             buyermod = true;
-            bag_class = "bag-no-animate";
+            Cart.bag_class = "bag-no-animate";
             grad_class = "grad";
             placeholder = "Введите название товара";
         }
@@ -238,7 +160,7 @@
         var userProducts = new List<Product>();
         foreach (var product in products)
         {
-            if (product.Seller_id == user.User_id)
+            if (product.Seller_id == User.user.User_id)
             {
                 userProducts.Add(product);
             }
@@ -246,17 +168,14 @@
         return userProducts;
     }
     
-    private async Task fillBag()
-    {
-        productsInBag = await PostgresConnection.GetBagData(user.User_id);
-    }
+    
 
     private async Task bagAddProduct(int product_id)
     {
-        var alreadyHasPr = productsInBag.Exists(e => (e.In_bag == product_id));
+        var alreadyHasPr = Cart.productsInBag.Exists(e => (e.In_bag == product_id));
 
-        await PostgresConnection.BagAdd(user.User_id, product_id, alreadyHasPr);
-        fillBag();
+        await PostgresConnection.BagAdd(User.user.User_id, product_id, alreadyHasPr);
+        Cart.fillBag();
     }
 
     private async Task bagDeleteProduct()
@@ -281,7 +200,7 @@
         else
         {
             await PostgresConnection.AddProduct(
-                user.User_id,
+                User.user.User_id,
                 newProduct.Category_id,
                 newProduct.Amount,
                 newProduct.Price,

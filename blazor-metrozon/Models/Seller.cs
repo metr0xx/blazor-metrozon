@@ -22,8 +22,8 @@
             Email = email;
             Password = password;
         }
+        public static User user = new User(1, "Mikle", "Frolov", 1200, "88005553535", "abobz@aboba.com", "12345");
 
-       
     }         
 }
 

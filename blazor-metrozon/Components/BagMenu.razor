@@ -1,0 +1,62 @@
+@using System.Net.Mail
+@using blazor_metrozon.ComponentsLogic
+
+<div class="@bag_class">
+    <div class="row">
+        <button class="bag" @onclick="animateBag">
+            <div class="d-inline-block">
+                <div class="row" style="right: 50%">
+                    <img src="images/leftarrow.png" style="height: 4vh; width: 2vw">
+                    <img src="images/shopping-basket.png" style="height: 4vh; width: 2vw">
+                </div>
+            </div>
+        </button>
+        <div class="bag-inside">
+            <div class="bag-header">Корзина</div>
+            @foreach (var prBag in productsInBag)
+            {
+                var pr = products.Find(e => (e.Product_id == prBag.In_bag));
+                <div class="bag-item">
+
+                    <div class="bag-col">
+                        <div class="bag-title">@pr.Title</div>
+                        <div class="bag-row">
+                            <div>Количество:</div>
+                            <input class="bag-input" value="@prBag.Amount">
+                            <button class="change-btn">
+                                <div class="btn-center">+</div>
+                            </button>
+                            <button class="change-btn">
+                                <div class="btn-center">-</div>
+                            </button>
+                        </div>
+                    </div>
+                    <button class="delete">
+                        <div class="btn-center">X</div>
+                    </button>
+
+
+                </div>
+            }
+        </div>
+    </div>
+
+</div>
+
+@code
+{
+    string bag_class = Cart.bag_class;
+    string[] statements = Cart.statements;
+    static List<Bag> productsInBag = Cart.productsInBag;
+    List<Product> products = Cart.products;
+}
+
+@functions
+{
+    private void animateBag()
+    {
+        Cart.animateBag();
+        bag_class = Cart.bag_class;
+        productsInBag = Cart.productsInBag;
+    }
+}
