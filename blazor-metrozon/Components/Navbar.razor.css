@@ -1,0 +1,151 @@
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.grad {
+    background-image: linear-gradient(45deg, #f5b690 0.1%, #ffe0cf, #ede1da);
+    height: 60rem;
+    display: flex;
+    transition: 1s;
+}
+
+.grad-sell-mod {
+    background-image: linear-gradient(45deg, #f5b690 0.1%, #ffe0cf, #ede1da);
+    height: 40%;
+    transition: 1s;
+    display: flex;
+}
+
+.mod-menu {
+    position: absolute;
+    right: 5%;
+    flex-direction: column;
+    background-color: #ded0c8;
+    width: 22vw;
+    height: 16vh;
+    border-end-start-radius: 55px;
+    border-end-end-radius: 55px;
+    top: -11%;
+    transition: .3s;
+    z-index: 2;
+}
+
+.mod-menu:hover {
+    transform: translateY(60px);
+}
+
+.mod-menu-up {
+    position: absolute;
+    right: 5%;
+    flex-direction: column;
+    background-color: #f57818;
+    width: 22vw;
+    border-end-start-radius: 55px;
+    border-end-end-radius: 55px;
+    z-index: 2;
+}
+
+.mod-menu-down {
+    position: absolute;
+    right: 5%;
+    flex-direction: column;
+    background-color: #f57818;
+    width: 22vw;
+    border-end-start-radius: 55px;
+    border-end-end-radius: 55px;
+    z-index: 2;
+}
+
+.choose-mod-txt {
+    font-size: 15pt;
+}
+
+.seller-mod-btn {
+    text-decoration: none;
+    display: inline-block;
+    margin-right: 0.5vw;
+    width: 140px;
+    height: 45px;
+    line-height: 45px;
+    border-radius: 45px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 3px;
+    font-weight: 600;
+    color: black;
+    background: white;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, .1);
+    transition: .3s;
+}
+
+.seller-mod-btn:hover {
+    background: #fc9c0a;
+    box-shadow: 0 8px 14px #fc9c0a;
+    color: white;
+    transform: translateY(-7px);
+}
+
+.seller-mod {
+    flex-flow: row wrap;
+    margin-top: 5vh;
+    margin-left: 1vw;
+}
+
+.topbar {
+    flex-direction: row;
+    margin: auto;
+    max-height: 15vh;
+}
+
+.Metrozon {
+    position: relative;
+    margin-right: 2vw;
+    width: 13vw;
+    min-height: 10vh;
+    background-color: transparent;
+    color: #f57818;
+    border: none;
+    font-size: 34pt
+}
+
+.catalog {
+    position: relative;
+    margin-right: 1vw;
+    min-width: 8vw;
+    min-height: 5vh;
+    height: 100%;
+    background-color: white;
+    color: #f57818;
+    border: 2px solid #e0d5ce;
+    font-size: 16pt;
+}
+
+.input {
+    min-width: 30vw;
+    min-height: 5vh;
+    background-color: white;
+    color: black;
+    margin-right: 0;
+    border: 2px solid #e0d5ce
+}
+
+.search {
+    min-width: 6vw;
+    min-height: 5vh;
+    background-color: #e0d5ce;
+    color: #f57818;
+    margin-left: -.36em;
+    border: 2px solid #e0d5ce
+}
+
+.liked {
+    margin-left: 1vw;
+    min-width: 11vw;
+    min-height: 5vh;
+    background-color: white;
+    color: #f57818;
+    border: 2px solid #e0d5ce;
+    font-size: 16pt;
+}

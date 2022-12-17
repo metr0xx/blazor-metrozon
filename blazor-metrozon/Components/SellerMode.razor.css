@@ -1,0 +1,70 @@
+.product-info {
+    flex-direction: row
+}
+
+.products-row {
+    margin-top: 2vh;
+    margin-left: 5vw;
+}
+
+
+.seller-mod-header {
+    justify-content: center;
+    display: flex;
+    margin-top: 2vh;
+}
+
+.product-list {
+    margin-top: 2vh;
+    flex-direction: column;
+}
+
+.product-row {
+    margin-top: 1vh;
+    flex-direction: row;
+    min-width: 100%;
+}
+
+.add-product-btn {
+    width: 18vw;
+    height: 8vh;
+    border-radius: 40px;
+    background-color: white;
+    border: 2px solid coral;
+    position: fixed;
+    bottom: 5%;
+    left: 41%;
+    font-size: 15pt;
+    transition: .2s ease-in-out;
+    font-family: 'Montserrat', sans-serif;
+    transition: .4s;
+    background: linear-gradient(90deg, rgba(255, 255, 255, .1), rgba(255, 255, 255, .5));
+}
+
+.add-product-btn:hover {
+    background: #fe6637;
+    color: #fff;
+}
+
+.add-product-btn:hover:before {
+    left: 150px;
+    transition: .5s ease-in-out;
+}
+
+.add-product-btn {
+    background: linear-gradient(90deg, rgba(255, 255, 255, .1), rgba(255, 255, 255, .5));
+}
+
+.add-product-btn:hover {
+    background: #fe6637;
+    color: #fff;
+}
+
+.add-product-btn:hover:before {
+    left: 150px;
+    transition: .5s ease-in-out;
+}
+
+btn-center {
+    margin: auto;
+}
