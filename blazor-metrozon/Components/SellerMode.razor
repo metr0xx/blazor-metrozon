@@ -1,0 +1,29 @@
+@using blazor_metrozon.ComponentsLogic
+@using blazor_metrozon.Components
+
+    @if (!SellerModeL.userProducts.Any())
+    {
+        <div>
+            У вас пока нет размещенных товаров.
+        </div>
+    }
+    else
+    {
+        <h2 class="seller-mod-header">Ваши товары</h2>
+        foreach (var product in SellerModeL.userProducts)
+        {
+            <div class="product-list">
+                <div class="product-row">
+                    <img src="images/noph.png" width="100" height="80">
+                    @product.Title, @product.Price ₽ (@product.Amount Шт.) @product.Description
+                    <button @onclick="@(e => SellerModeL.toggleShowDialog(true, product.Product_id))">Изменить</button>
+                    <button @onclick="@(e => SellerModeL.deleteProduct(product.Product_id))">X</button>
+                </div>
+            </div>
+        }
+        <button class="add-product-btn" @onclick="@(e => SellerModeL.toggleShowDialog(false))">Добавить новый товар</button>
+    }
+@if (SellerModeL.showDialog)
+{
+    <DialogWindow/>
+}

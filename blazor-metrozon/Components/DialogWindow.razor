@@ -1,0 +1,34 @@
+@using blazor_metrozon.ComponentsLogic
+
+<div class="new-product-dialog">
+
+    <div class="input-col">
+        <div class="input-line">
+            <div class="input-hint">Название товара</div>
+            <input class="input-prod-info" @bind="@NewProductL.newProduct.Title" @oninput="@((e) => { try {NewProductL.newProduct.Title = (string)e.Value;} catch {}})">
+        </div>
+        <div class="input-line">
+            <div class="input-hint">Стоимость товара</div>
+            <input class="input-prod-info" @bind="@NewProductL.newProduct.Price" @oninput="@((e) => { try {NewProductL.newProduct.Price = (int)e.Value;} catch {}})">
+        </div>
+        <div class="input-line">
+            <div class="input-hint">Количество (шт)</div>
+            <input class="input-prod-info" @bind="@NewProductL.newProduct.Amount" @oninput="@((e) => { try {NewProductL.newProduct.Amount = (int)e.Value;} catch {}})">
+        </div>
+        <div class="input-line">
+            <div class="input-hint">Категория</div>
+            <select @bind="@NewProductL.newProduct.Category_id" class="categoryList">
+                @foreach (var category in NavbarL.categories)
+                {
+                    <option value="@category.Id" class="">@category.Name</option>
+                }
+            </select>
+        </div>
+        <div class="input-line">
+            <div class="input-hint">Описание</div>
+            <textarea class="input-prod-info" @bind="@NewProductL.newProduct.Description" @oninput="@((e) => { try {NewProductL.newProduct.Description = (string)e.Value;} catch {}})"></textarea>
+        </div>
+        <button class="add-product-btn-up" @onclick="@(e => NewProductL.saveNewProductData(NewProductL.newProductButtonTitle == "Изменить"))">@NewProductL.newProductButtonTitle</button>
+    </div>
+    
+</div>

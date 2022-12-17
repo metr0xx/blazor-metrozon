@@ -1,262 +1,29 @@
 ﻿@inherits LayoutComponentBase
 @using blazor_metrozon.Components
-@using Microsoft.AspNetCore.Components;
-@using System.Linq;
 @using blazor_metrozon.ComponentsLogic
-@using blazor_metrozon.Models
 
-<link href="https://css.gg/search.css" rel="stylesheet">
-<link href="https://css.gg/menu.css" rel="stylesheet">
-<link href="https://css.gg/heart.css" rel="stylesheet">
 <link href="https://css.gg/shopping-cart.css" rel="stylesheet">
 <link href="https://css.gg/eye.css" rel="stylesheet">
 <link href="https://css.gg/arrow-bottom-left.css" rel="stylesheet">
 
 
 <div class="page">
-    <div class="@grad_class">
-        <div class="mod-menu">
-            <div class="menu-col">
-                <div class="seller-mod">
-                    <button class="seller-mod-btn" @onclick="changeMod">покупатель</button>
-                    <button class="seller-mod-btn" @onclick="changeMod">продавец</button>
-                </div>
-                <div class="row" style="margin-top: 1.5vh; margin-left: 3.5vw">
-                    <i class="choose-mod-txt">Выберите режим</i>
-                    <img src="images/downarrow.png" style="height: 4vh; width: 3vw; margin-left: 1vw;">
-                </div>
-            </div>
-        </div>
-        <div class="topbar">
-            <button @onclick="home" class="Metrozon">Metrozon</button>
-            <button class="catalog"><span class="d-inline-block" style="height: 7px; width: 30px"><i class="gg-menu"></i></span>Каталог</button>
-            <input class="input" placeholder="@placeholder" />
-            <button class="search"><span class="d-inline-block"><i class="gg-search" style="width: 17px; height: 17px;"></i></span></button>
-            <button class="liked"><span class=d-inline-block style="height: 11px; width: 22px"><i class="gg-heart" style="position: relative; z-index: 1"></i></span>Избранное</button>
-        </div>
-    </div>
-    
-    @if (buyermod)
-    {   
-        <div class="row" style="margin-left: 0.5vw; margin-top: 1vh; height: 80vh">
-            @foreach (var product in products)
-            {
-                <div class="row" style="margin-left: 1vw; margin-top: 2vh">
-                    <button class="card">
-                        <div class="container">
-
-                            <p><img src="images/noph.png" width="270" height="220"></p>
-                            <h5><b>@formatString(product.Title)</b></h5>
-                            <h5><b>@product.Price ₽</b></h5>
-                            <h6>Осталось @product.Amount шт.</h6>
-
-                        </div>
-                    </button>
-                    <div class="card-button-col">
-                        <button class="card-button" title="Добавить в избранное"><span class=d-inline-block><i class="gg-heart"></i></span></button>
-                        <button @onclick="@(e=> bagAddProduct (product.Product_id))" class="card-button" title="Добавить в корзину"><span class=d-inline-block><i class="gg-shopping-cart"></i></span></button>
-                        <button class="card-button" title="Посмотреть похожее"><span class=d-inline-block><i class="gg-eye"></i></span></button>
-                    </div>
-
-                </div>
-            }
-            
-        </div>
-        <BagMenu/>
+    <Navbar/>
+    @if (BuyerModeL.buyermod)
+    {
+        <BuyerMode/>
     }
     else
     {
-        if (!userProducts.Any())
-        {
-            <div>
-                У вас пока нет размещенных товаров.
-            </div>
-        }
-        else
-        {
-            <h2 class="seller-mod-header">Ваши товары</h2>
-            foreach (var product in userProducts)
-            {
-                <div class="product-list">
-                    <div class="product-row">
-                        <img src="images/noph.png" width="100" height="80">
-                        @product.Title, @product.Price ₽ (@product.Amount Шт.) @product.Description
-                        <button @onclick="@(e => toggleShowDialog(true, product.Product_id))">Изменить</button>
-                        <button @onclick="@(e => deleteProduct(product.Product_id))">X</button>
-                    </div>
-                </div>
-            }
-            <button class="add-product-btn" @onclick="@(e => toggleShowDialog(false))">Добавить новый товар</button>
-        }
-        if (showDialog)
-        {
-             <div class="new-product-dialog">
-                
-                <div class="input-col">
-                    <div class="input-line">
-                        <div class="input-hint">Название товара</div>
-                        <input class="input-prod-info" @bind="@newProduct.Title" @oninput="@((e) => { try { newProduct.Title=(string)e.Value;} catch {}})">
-                    </div>
-                    <div class="input-line">
-                        <div class="input-hint">Стоимость товара</div>
-                        <input class="input-prod-info" @bind="@newProduct.Price" @oninput="@((e) => { try {newProduct.Price=(int)e.Value;} catch {}})">
-                    </div>
-                    <div class="input-line">
-                            <div class="input-hint">Количество (шт)</div>
-                            <input class="input-prod-info" @bind="@newProduct.Amount" @oninput="@((e) => { try {newProduct.Amount=(int)e.Value;} catch {}})">
-                        </div>
-                        <div class="input-line">
-                            <div class="input-hint">Категория</div>
-                            <select @bind="@newProduct.Category_id" class="categoryList">
-                                @foreach (var category in categories)
-                                {
-                                    <option value="@category.Id" class="">@category.Name</option>
-                                }
-                            </select>
-                        </div>
-                        <div class="input-line">
-                            <div class="input-hint">Описание</div>
-                            <textarea class="input-prod-info" @bind="@newProduct.Description" @oninput="@((e) => { try {newProduct.Description=(string)e.Value;} catch {}})"></textarea>
-                        </div>
-                        <button class="add-product-btn-up" @onclick="@(e => saveNewProductData(newProductButtonTitle == "Изменить"))">@newProductButtonTitle</button>
-                    </div>
-                </div>
-        }
+        <SellerMode/>
     }
+    
+    
 </div>
 
 
 @code {
-    bool buyermod = true;
-    bool showCategories = false;
-    bool showDialog = false;
-    static List<Product> products = Cart.products;
-    string grad_class = "grad";
-    List<Product> userProducts = new List<Product>(fillUserProducts());
-    List<Category> categories = new List<Category>(PostgresConnection.GetCategories());
-    string placeholder = "Введите название товара";
-    Product newProduct = new Product(0, 0, 0, 0, 0, 0.0, "", "");
-
-    string newProductButtonTitle = "";
-
-    private void home()
-    {
-        buyermod = true;
-    }
-
-    private void toggleShowCategories()
-    {
-        showCategories = !showCategories;
-    }
-
-    private void changeMod()
-    {
-        if (buyermod)
-        {
-            buyermod = false;
-            grad_class = "grad-sell-mod";
-            placeholder = "Поиск по вашим товарам";
-        }
-        else
-        {
-            buyermod = true;
-            Cart.bag_class = "bag-no-animate";
-            grad_class = "grad";
-            placeholder = "Введите название товара";
-        }
-    }
-
-    private void clearProductInfo()
-    {
-        newProduct.Category_id = 0;
-        newProduct.Amount = 0;
-        newProduct.Price = 0;
-        newProduct.Title = "";
-        newProduct.Description = "";
-    }
-
-    private void toggleShowDialog(bool changed, int product_id = 0)
-    {
-        newProduct.Product_id = product_id;
-        newProductButtonTitle = changed ? "Изменить" : "Добавить";
-        showDialog = !showDialog;
-        clearProductInfo();
-    }
-
-    private static List<Product> fillUserProducts()
-    {
-        var userProducts = new List<Product>();
-        foreach (var product in products)
-        {
-            if (product.Seller_id == User.user.User_id)
-            {
-                userProducts.Add(product);
-            }
-        }
-        return userProducts;
-    }
     
-    
-
-    private async Task bagAddProduct(int product_id)
-    {
-        var alreadyHasPr = Cart.productsInBag.Exists(e => (e.In_bag == product_id));
-
-        await PostgresConnection.BagAdd(User.user.User_id, product_id, alreadyHasPr);
-        Cart.fillBag();
-    }
-
-    private async Task bagDeleteProduct()
-    {
-        // delete from bag
-    }
-    private async Task saveNewProductData(bool changed)
-    {   
-        showDialog = false;
-        if (changed)
-        {
-            await PostgresConnection.ChangeProduct(
-                newProduct.Product_id,
-                newProduct.Category_id,
-                newProduct.Amount,
-                newProduct.Price,
-                newProduct.Title,
-                newProduct.Description);
-            products = PostgresConnection.ShowProducts();
-            userProducts = fillUserProducts();
-        }
-        else
-        {
-            await PostgresConnection.AddProduct(
-                User.user.User_id,
-                newProduct.Category_id,
-                newProduct.Amount,
-                newProduct.Price,
-                newProduct.Title,
-                newProduct.Description);
-            products = PostgresConnection.ShowProducts();
-            userProducts.Add(products[products.Count() - 1]);
-        }
-        clearProductInfo();
-    }
-
-    private async Task deleteProduct(int product_id)
-    {
-        // warning dialog
-        await PostgresConnection.DeleteProduct(product_id);
-        products = PostgresConnection.ShowProducts();
-        userProducts = fillUserProducts();
-    }
-    
-    public string formatString(string str)
-    {
-        if (str.Length > 20)
-        {
-            return str.Substring(0, 21) + "...";
-        }
-        return str;
-    }
-
 }
 
 

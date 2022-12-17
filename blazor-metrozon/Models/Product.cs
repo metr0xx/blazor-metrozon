@@ -1,4 +1,6 @@
-﻿namespace blazor_metrozon.Models
+﻿using System.Collections.Generic;
+
+namespace blazor_metrozon.Models
 {
     public class Product
     {
@@ -21,6 +23,9 @@
             Title = title;
             Description = description;
         }
+
     }
+    
+
     
 }

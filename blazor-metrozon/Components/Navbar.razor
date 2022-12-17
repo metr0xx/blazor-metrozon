@@ -1,0 +1,44 @@
+@using blazor_metrozon.ComponentsLogic
+
+<link href="https://css.gg/search.css" rel="stylesheet">
+<link href="https://css.gg/menu.css" rel="stylesheet">
+<link href="https://css.gg/heart.css" rel="stylesheet">
+
+<div class="@NavbarL.grad_class">
+    <div class="mod-menu">
+        <div class="menu-col">
+            <div class="seller-mod">
+                <button class="seller-mod-btn" @onclick="@NavbarL.changeMod">покупатель</button>
+                <button class="seller-mod-btn" @onclick="@NavbarL.changeMod">продавец</button>
+            </div>
+            <div class="row" style="margin-top: 1.5vh; margin-left: 3.5vw">
+                <i class="choose-mod-txt">Выберите режим</i>
+                <img src="images/downarrow.png" style="height: 4vh; width: 3vw; margin-left: 1vw;">
+            </div>
+        </div>
+    </div>
+    <div class="topbar">
+        <button @onclick="home" class="Metrozon">Metrozon</button>
+        <button class="catalog"><span class="d-inline-block" style="height: 7px; width: 30px"><i class="gg-menu"></i></span>Каталог</button>
+        <input class="input" placeholder="@NavbarL.placeholder" />
+        <button class="search"><span class="d-inline-block"><i class="gg-search" style="width: 17px; height: 17px;"></i></span></button>
+        <button class="liked"><span class=d-inline-block style="height: 11px; width: 22px"><i class="gg-heart" style="position: relative; z-index: 1"></i></span>Избранное</button>
+    </div>
+</div>
+
+@code 
+{
+    bool showCategories = false;
+}
+
+@functions
+{
+    private void home()
+    {
+        BuyerModeL.buyermod = true;
+    }
+    private void toggleShowCategories()
+    {
+        showCategories = !showCategories;
+    }
+}

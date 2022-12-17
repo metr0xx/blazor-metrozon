@@ -1,9 +1,9 @@
 @using System.Net.Mail
 @using blazor_metrozon.ComponentsLogic
 
-<div class="@bag_class">
+<div class="@CartL.bag_class">
     <div class="row">
-        <button class="bag" @onclick="animateBag">
+        <button class="bag" @onclick="CartL.AnimateBag">
             <div class="d-inline-block">
                 <div class="row" style="right: 50%">
                     <img src="images/leftarrow.png" style="height: 4vh; width: 2vw">
@@ -13,9 +13,9 @@
         </button>
         <div class="bag-inside">
             <div class="bag-header">Корзина</div>
-            @foreach (var prBag in productsInBag)
+            @foreach (var prBag in CartL.productsInBag)
             {
-                var pr = products.Find(e => (e.Product_id == prBag.In_bag));
+                var pr = BuyerModeL.products.Find(e => (e.Product_id == prBag.In_bag));
                 <div class="bag-item">
 
                     <div class="bag-col">
@@ -43,20 +43,10 @@
 
 </div>
 
-@code
-{
-    string bag_class = Cart.bag_class;
-    string[] statements = Cart.statements;
-    static List<Bag> productsInBag = Cart.productsInBag;
-    List<Product> products = Cart.products;
-}
-
 @functions
 {
-    private void animateBag()
+    private async Task bagDeleteProduct()
     {
-        Cart.animateBag();
-        bag_class = Cart.bag_class;
-        productsInBag = Cart.productsInBag;
+    // delete from bag
     }
 }

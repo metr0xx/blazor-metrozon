@@ -1,0 +1,49 @@
+@using blazor_metrozon.ComponentsLogic
+
+<div class="row" style="margin-left: 0.5vw; margin-top: 1vh; height: 80vh">
+        @foreach (var product in BuyerModeL.products)
+        {
+            <div class="row" style="margin-left: 1vw; margin-top: 2vh">
+                <button class="card">
+                    <div class="container">
+
+                        <p><img src="images/noph.png" width="270" height="220"></p>
+                        <h5><b>@formatString(product.Title)</b></h5>
+                        <h5><b>@product.Price ₽</b></h5>
+                        <h6>Осталось @product.Amount шт.</h6>
+
+                    </div>
+                </button>
+                <div class="card-button-col">
+                    <button class="card-button" title="Добавить в избранное"><span class=d-inline-block><i class="gg-heart"></i></span></button>
+                    <button @onclick="@(e => bagAddProduct(product.Product_id))" class="card-button" title="Добавить в корзину"><span class=d-inline-block><i class="gg-shopping-cart"></i></span></button>
+                    <button class="card-button" title="Посмотреть похожее"><span class=d-inline-block><i class="gg-eye"></i></span></button>
+                </div>
+
+            </div>
+        }
+
+    </div>
+    <BagMenu/>
+
+}
+
+@functions
+{
+    private async Task bagAddProduct(int product_id)
+    {
+        var alreadyHasPr = CartL.productsInBag.Exists(e => (e.In_bag == product_id));
+
+        await PostgresConnection.BagAdd(User.user.User_id, product_id, alreadyHasPr);
+        CartL.fillBag();
+    }
+
+    public string formatString(string str)
+    {
+        if (str.Length > 20)
+        {
+            return str.Substring(0, 21) + "...";
+        }
+        return str;
+    }
+}
